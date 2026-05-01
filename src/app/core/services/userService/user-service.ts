@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase.config';
-import { AppUser } from '../models/appUser';
+import { db } from '../../../firebase.config';
+import { AppUser } from '../../models/appUser';
 
 @Injectable({
   providedIn: 'root',

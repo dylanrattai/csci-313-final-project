@@ -15,7 +15,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../../../firebase.config';
 import { AppUser } from '../../models/appUser';
-import { UserService } from '../user-service';
+import { UserService } from '../userService/user-service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,16 +24,17 @@ export class AuthService {
   private readonly userService = inject(UserService);
 
   private readonly _appUser = signal<AppUser | null>(null);
-
   readonly appUser = this._appUser.asReadonly();
 
   private readonly _currentUser = signal<User | null>(null);
-
   readonly currentUser = this._currentUser.asReadonly();
 
   readonly isLoggedIn = computed(() => this._currentUser() !== null);
 
   readonly isAdmin = computed(() => this._appUser()?.role === 'admin');
+
+  private _isAuthReady = signal(false);
+  readonly isAuthReady = this._isAuthReady.asReadonly();
 
   constructor() {
     this.initAuthStateListener();
@@ -45,6 +46,7 @@ export class AuthService {
 
       if (!user) {
         this._appUser.set(null);
+        this._isAuthReady.set(true);
         return;
       }
 
@@ -55,6 +57,8 @@ export class AuthService {
         }
       } catch {
         this._appUser.set(null);
+      } finally {
+        this._isAuthReady.set(true);
       }
     });
   }

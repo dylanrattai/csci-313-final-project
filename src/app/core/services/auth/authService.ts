@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import {
   createUserWithEmailAndPassword,
   deleteUser,
@@ -13,49 +13,76 @@ import {
   updatePassword,
   User,
 } from 'firebase/auth';
-import { auth } from '../../firebase.config';
+import { auth } from '../../../firebase.config';
+import { AppUser } from '../../models/appUser';
+import { UserService } from '../user-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _currentUser = signal<User | null>(null);
+  private readonly userService = inject(UserService);
 
-  currentUser = this._currentUser.asReadonly();
+  private readonly _appUser = signal<AppUser | null>(null);
 
-  isLoggedIn = computed(() => this._currentUser() !== null);
+  readonly appUser = this._appUser.asReadonly();
+
+  private readonly _currentUser = signal<User | null>(null);
+
+  readonly currentUser = this._currentUser.asReadonly();
+
+  readonly isLoggedIn = computed(() => this._currentUser() !== null);
+
+  readonly isAdmin = computed(() => this._appUser()?.role === 'admin');
 
   constructor() {
     this.initAuthStateListener();
   }
 
-  private initAuthStateListener() {
-    onAuthStateChanged(auth, (user) => {
+  private async initAuthStateListener() {
+    onAuthStateChanged(auth, async (user) => {
       this._currentUser.set(user);
+
+      if (!user) {
+        this._appUser.set(null);
+        return;
+      }
+
+      try {
+        const appUser = await this.userService.getUser(user.uid);
+        if (this._currentUser()?.uid === user.uid) {
+          this._appUser.set(appUser);
+        }
+      } catch {
+        this._appUser.set(null);
+      }
     });
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string): Promise<void> {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      return userCredential.user;
+      const user = userCredential.user;
+
+      await this.userService.createUser(user.uid, {
+        email: user.email ?? email,
+        role: 'customer',
+      });
     } catch (error: any) {
       throw this.mapError(error);
     }
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<void> {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      return userCredential.user;
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       throw this.mapError(error);
     }
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     try {
       await signOut(auth);
     } catch (error: any) {
@@ -63,26 +90,13 @@ export class AuthService {
     }
   }
 
-  getUser() {
-    return this._currentUser();
-  }
-
-  getUserProfile() {
+  async updateUserPassword(newPassword: string): Promise<void> {
     const user = this._currentUser();
-    if (!user) {
-      return null;
-    }
-    return {
-      email: user.email,
-      uid: user.uid,
-    };
-  }
 
-  async updateUserPassword(newPassword: string) {
-    const user = this._currentUser();
     if (!user) {
       throw new Error('No user is currently logged in.');
     }
+
     try {
       await updatePassword(user, newPassword);
     } catch (error: any) {
@@ -90,7 +104,7 @@ export class AuthService {
     }
   }
 
-  async sendPasswordReset(email: string) {
+  async sendPasswordReset(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error: any) {
@@ -98,8 +112,9 @@ export class AuthService {
     }
   }
 
-  async updateUserEmail(newEmail: string) {
+  async updateUserEmail(newEmail: string): Promise<void> {
     const user = this._currentUser();
+
     if (!user) {
       throw new Error('No user is currently logged in.');
     }
@@ -111,8 +126,9 @@ export class AuthService {
     }
   }
 
-  async sendVerificationEmail() {
+  async sendVerificationEmail(): Promise<void> {
     const user = this._currentUser();
+
     if (!user) {
       throw new Error('No user is currently logged in.');
     }
@@ -124,8 +140,9 @@ export class AuthService {
     }
   }
 
-  async deleteAccount() {
+  async deleteAccount(): Promise<void> {
     const user = this._currentUser();
+
     if (!user) {
       throw new Error('No user is currently logged in.');
     }
@@ -137,7 +154,7 @@ export class AuthService {
     }
   }
 
-  async reauthenticate(email: string, password: string) {
+  async reauthenticate(email: string, password: string): Promise<void> {
     const user = this._currentUser();
     if (!user) {
       throw new Error('No user is currently logged in.');

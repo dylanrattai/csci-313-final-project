@@ -28,9 +28,19 @@
           <li class="nav-item mx-1">
             <a class="nav-link active" routerLink="">Contact</a>
           </li>
-          <li class="nav-item mx-1">
-            <a class="nav-link active" routerLink="login/">Login</a>
-          </li>
+          @if (auth.isLoggedIn()) {
+            <li class="nav-item mx-1">
+              <a class="nav-link active" routerLink="/profile">Profile</a>
+            </li>
+
+            <li class="nav-item mx-1">
+              <a class="nav-link active" (click)="logout()">Logout</a>
+            </li>
+          } @else {
+            <li class="nav-item mx-1">
+              <a class="nav-link active" routerLink="/login">Login</a>
+            </li>
+          }
           <li class="nav-item">
             <a class="btn rounded-pill ms-lg-3 custom-red" routerLink="">Place an Order</a>
           </li>

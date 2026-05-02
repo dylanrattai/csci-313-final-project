@@ -1,25 +1,74 @@
-<div class="container mt-5" style="max-width: 400px">
-  <h2 class="mb-4 text-center">Sign Up</h2>
+<div class="auth-shell container py-5">
+  <div class="auth-card mx-auto">
+    <h2 class="mb-2 text-center">Sign Up</h2>
+    <p class="text-center text-secondary mb-4">Create your shop account and profile.</p>
 
-  <form>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" name="email" required />
-    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      @if (error) {
+        <div class="alert alert-danger py-2" role="alert" aria-live="polite">
+          {{ error }}
+        </div>
+      }
 
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-control" name="password" required />
-    </div>
+      <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          [class.is-invalid]="isInvalid('email')"
+          formControlName="email"
+          id="email"
+          autocomplete="email"
+          inputmode="email"
+          required
+          (input)="clearError()"
+        />
+        <div class="invalid-feedback">Please provide a valid email.</div>
+      </div>
 
-    <div class="mb-3">
-      <label class="form-label">Confirm Password</label>
-      <input type="password" class="form-control" name="confirmPassword" required />
-    </div>
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          [class.is-invalid]="isInvalid('password')"
+          formControlName="password"
+          id="password"
+          autocomplete="new-password"
+          required
+          (input)="clearError()"
+        />
+        <div class="invalid-feedback">Password must be at least 6 characters.</div>
+      </div>
 
-    <button class="btn btn-primary w-100" type="submit">Sign Up</button>
+      <div class="mb-3">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          [class.is-invalid]="isInvalid('confirmPassword')"
+          formControlName="confirmPassword"
+          id="confirmPassword"
+          autocomplete="new-password"
+          required
+          (input)="clearError()"
+        />
+        <div class="invalid-feedback">Passwords must match.</div>
+      </div>
 
-    <button class="btn btn-outline-secondary w-100 mt-2" type="button">Continue as Guest</button>
-  </form>
-  <a class="d-block text-center mt-3" routerLink="/login">Already have an account? Login</a>
+      <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
+        @if (loading) {
+          Creating account...
+        } @else {
+          Sign Up
+        }
+      </button>
+
+      <button class="btn btn-outline-secondary w-100 mt-2" type="button" routerLink="/">
+        Continue as Guest
+      </button>
+    </form>
+
+    <a class="d-block text-center mt-3" routerLink="/login">Already have an account? Login</a>
+  </div>
 </div>

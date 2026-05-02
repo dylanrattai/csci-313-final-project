@@ -1,5 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   deleteUser,
   EmailAuthProvider,
@@ -7,6 +8,7 @@ import {
   reauthenticateWithCredential,
   sendEmailVerification,
   sendPasswordResetEmail,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -74,7 +76,7 @@ export class AuthService {
         role: 'customer',
       });
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -82,7 +84,7 @@ export class AuthService {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -90,7 +92,7 @@ export class AuthService {
     try {
       await signOut(auth);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -104,7 +106,7 @@ export class AuthService {
     try {
       await updatePassword(user, newPassword);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -112,7 +114,7 @@ export class AuthService {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -126,7 +128,7 @@ export class AuthService {
     try {
       await updateEmail(user, newEmail);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -140,7 +142,7 @@ export class AuthService {
     try {
       await sendEmailVerification(user);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -154,7 +156,7 @@ export class AuthService {
     try {
       await deleteUser(user);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -168,7 +170,7 @@ export class AuthService {
     try {
       await reauthenticateWithCredential(user, userCred);
     } catch (error: any) {
-      throw this.mapError(error);
+      throw new Error(this.mapError(error));
     }
   }
 
@@ -176,6 +178,11 @@ export class AuthService {
     switch (error.code) {
       case 'auth/email-already-in-use':
         return 'Email already in use';
+
+      case 'auth/wrong-password':
+      case 'auth/user-not-found':
+      case 'auth/invalid-credential':
+        return 'Incorrect email or password';
 
       case 'auth/invalid-email':
         return 'Invalid email address';

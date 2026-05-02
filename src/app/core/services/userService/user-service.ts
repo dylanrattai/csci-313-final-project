@@ -37,10 +37,7 @@ export class UserService {
   }
 
   async createUser(uid: string, data: Omit<AppUser, 'id'>): Promise<void> {
-    await setDoc(doc(db, 'users', uid), {
-      data,
-    });
-
+      await setDoc(doc(db, 'users', uid), data, { merge: true });
     await this.loadUsers();
   }
 

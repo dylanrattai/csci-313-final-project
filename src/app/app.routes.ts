@@ -4,6 +4,7 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { StaffViewOrders } from './components/staff-view-orders/staff-view-orders';
 import { roleGuard } from './core/guards/role-guard/role-guard';
+import { Profile } from './components/profile/profile/profile';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,10 @@ export const routes: Routes = [
     title: 'View Orders',
     canActivate: [roleGuard],
     data: { role: 'employee' },
+  },
+  {
+    path: 'profile',
+    component: Profile,
+    title: 'Profile',
   },
 ];

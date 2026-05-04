@@ -25,7 +25,7 @@ export const routes: Routes = [
     path: 'staff-view-orders',
     component: StaffViewOrders,
     title: 'View Orders',
-    //canActivate: [roleGuard],
-    //data: { role: 'employee' },
+    canActivate: [roleGuard],
+    data: { role: 'employee' },
   },
 ];

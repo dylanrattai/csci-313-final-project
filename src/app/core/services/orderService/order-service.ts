@@ -1,13 +1,14 @@
 import { Injectable, signal } from '@angular/core';
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase.config';
-import { Order } from '../../models/order'; // adjust path if needed
+import { Order } from '../../models/order';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  private readonly ordersCollection = collection(db, 'orders');
+  // FIX: use "order" instead of "orders"
+  private readonly ordersCollection = collection(db, 'order');
 
   private readonly _orders = signal<Order[]>([]);
   readonly orders = this._orders.asReadonly();
@@ -25,7 +26,7 @@ export class OrderService {
   }
 
   async getOrder(id: string): Promise<Order | null> {
-    const snap = await getDoc(doc(db, 'orders', id));
+    const snap = await getDoc(doc(db, 'order', id));
     if (!snap.exists()) return null;
 
     return {
@@ -35,17 +36,17 @@ export class OrderService {
   }
 
   async createOrder(id: string, data: Omit<Order, 'order_id'>): Promise<void> {
-    await setDoc(doc(db, 'orders', id), data, { merge: true });
+    await setDoc(doc(db, 'order', id), data, { merge: true });
     await this.loadOrders();
   }
 
   async updateOrder(id: string, data: Partial<Omit<Order, 'order_id'>>): Promise<void> {
-    await updateDoc(doc(db, 'orders', id), data);
+    await updateDoc(doc(db, 'order', id), data);
     await this.loadOrders();
   }
 
   async deleteOrder(id: string): Promise<void> {
-    await deleteDoc(doc(db, 'orders', id));
+    await deleteDoc(doc(db, 'order', id));
     await this.loadOrders();
   }
 }

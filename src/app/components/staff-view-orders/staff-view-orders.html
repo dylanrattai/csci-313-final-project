@@ -7,5 +7,11 @@
   </head>
   <body>
     <h1>Orders</h1>
+    <div class="scrollable">
+      @for (order of orders(); track order.order_id) {
+      <app-staff-order-table [order]="order" [usersMap]="usersMap" [itemsMap]="itemsMap">
+      </app-staff-order-table>
+      }
+    </div>
   </body>
 </html>

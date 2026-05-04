@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label class="form-label" for="firstName"> First Name</label>
+    <input class="form-control" id="firstName" type="text" formControlName="firstName" />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="lastName">Last Name</label>
+    <input class="form-control" id="lastName" type="text" formControlName="lastName" />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="email">Email</label>
+    <input
+      class="form-control"
+      id="email"
+      type="email"
+      formControlName="email"
+      autocomplete="email"
+      inputmode="email"
+    />
+    <div class="invalid-feedback">Enter a valid email address.</div>
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-primary" type="submit">Save Changes</button>
+  </div>
+</form>

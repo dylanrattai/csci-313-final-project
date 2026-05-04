@@ -1,0 +1,41 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="list-group">
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        [class.active]="activeTab() === 'account'"
+        (click)="selectTab('account')"
+      >
+        Account details
+      </button>
+
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        [class.active]="activeTab() === 'addresses'"
+        (click)="selectTab('addresses')"
+      >
+        Addresses
+      </button>
+
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        [class.active]="activeTab() === 'orders'"
+        (click)="selectTab('orders')"
+      >
+        Orders
+      </button>
+
+      <button
+        type="button"
+        class="list-group-item list-group-item-action text-danger"
+        [class.active]="activeTab() === 'logout'"
+        (click)="selectTab('logout')"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</div>

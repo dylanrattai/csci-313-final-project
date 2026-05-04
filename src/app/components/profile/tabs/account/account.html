@@ -74,6 +74,23 @@
       }
     </div>
 
+    @if (emailChanged) {
+      <div class="mb-3">
+        <label class="form-label" for="password">Current Password</label>
+        <input
+          class="form-control"
+          [class.is-invalid]="submitted && !form.get('password')?.value?.trim()"
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password to confirm email change"
+        />
+        @if (submitted && !form.get('password')?.value?.trim()) {
+          <div class="invalid-feedback d-block">Password is required to change your email.</div>
+        }
+      </div>
+    }
+
     <div class="mb-3">
       <button class="btn btn-primary" type="submit">Save Changes</button>
     </div>

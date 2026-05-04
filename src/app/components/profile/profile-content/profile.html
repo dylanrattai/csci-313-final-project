@@ -2,7 +2,7 @@
   <div class="card-body">
     @switch (activeTab()) {
       @case ('account') {
-       
+        <app-account [initialData]="user()" />
       }
 
       @case ('addresses') {

@@ -14,8 +14,11 @@ export class Account {
   private readonly auth = inject(AuthService);
   private readonly userService = inject(UserService);
 
+  private initialEmail: string = '';
+
   @Input() set initialData(value: AppUser | null) {
     if (value) {
+      this.initialEmail = value.email ?? '';
       this.form.patchValue({
         firstName: value.firstName ?? '',
         lastName: value.lastName ?? '',
@@ -32,11 +35,17 @@ export class Account {
     lastName: new FormControl(''),
     phone: new FormControl('', [Validators.pattern(/^\+?[1-9]\d{1,14}$/)]),
     email: new FormControl('', [Validators.email]),
+    password: new FormControl(''),
   });
 
   submitted = false;
   error: string | null = null;
   success = signal<string | null>(null);
+
+  get emailChanged(): boolean {
+    const currentEmail = this.form.get('email')?.value ?? '';
+    return currentEmail.trim() !== this.initialEmail;
+  }
 
   isInvalid(controlName: string): boolean {
     const control = this.form.get(controlName);
@@ -52,6 +61,12 @@ export class Account {
       return;
     }
 
+    // If email changed, password is required
+    if (this.emailChanged && !this.form.get('password')?.value?.trim()) {
+      this.error = 'Password is required to change your email.';
+      return;
+    }
+
     this.error = null;
 
     const currentUser = this.auth.currentUser();
@@ -61,23 +76,36 @@ export class Account {
       return;
     }
 
-    const { firstName, lastName, email, phone } = this.form.getRawValue();
+    const { firstName, lastName, email, phone, password } = this.form.getRawValue();
+    const trimmedEmail = email?.trim() ?? '';
+    const emailChanged = this.emailChanged && !!trimmedEmail;
 
     const userUpdate: Partial<AppUser> = {};
     if (firstName && firstName.trim()) userUpdate.firstName = firstName.trim();
     if (lastName && lastName.trim()) userUpdate.lastName = lastName.trim();
-    if (email && email.trim()) userUpdate.email = email.trim();
+    if (trimmedEmail && !emailChanged) userUpdate.email = trimmedEmail;
     if (phone && phone.trim()) userUpdate.phone = phone.trim();
 
     try {
-      if (userUpdate.email) {
-        await this.auth.reauthenticate(currentUser.email ?? '', prompt('Please enter your current password to change your email:') || '');
-        await this.auth.updateUserEmail(userUpdate.email);
+      if (emailChanged && password) {
+        const user = this.auth.currentUser();
+        if (!user) {
+          throw new Error('No user is currently logged in.');
+        }
+
+        await this.auth.reauthenticate(this.initialEmail, password);
+        await this.auth.updateUserEmail(trimmedEmail);
+        userUpdate.email = trimmedEmail;
       }
-      await this.userService.updateUser(currentUser.uid, userUpdate);
+
+      if (Object.keys(userUpdate).length > 0) {
+        await this.userService.updateUser(currentUser.uid, userUpdate);
+      }
+
       this.success.set('Profile updated successfully!');
       this.error = null;
       this.submitted = false;
+      this.form.get('password')?.reset();
     } catch (error: unknown) {
       this.error =
         error instanceof Error ? error.message : 'Failed to update profile. Please try again.';

@@ -2,12 +2,12 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/authService';
 
-export const roleGuard: CanActivateFn = (route, state) => {
+export const roleGuard: CanActivateFn = async (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (!auth.isAuthReady()) {
-    return false;
+  while (!auth.isAuthReady()) {
+    await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
   const requiredRole = route.data['role'] as string;

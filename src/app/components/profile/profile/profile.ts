@@ -1,11 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { ProfileContent } from '../profile-content/profile';
 import { ProfileSidebar } from '../sidebar/sidebar';
-import { Addresses } from '../tabs/addresses/addresses';
 
 @Component({
   selector: 'app-profile',
-  imports: [ProfileSidebar, ProfileContent, Addresses],
+  imports: [ProfileSidebar, ProfileContent],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })

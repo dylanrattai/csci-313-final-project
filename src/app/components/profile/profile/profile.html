@@ -5,9 +5,7 @@
     </aside>
 
     <main class="col-12 col-lg-9">
-      <app-profile-content [activeTab]="activeTab()" [hidden]="activeTab() === 'addresses'" />
-
-      <app-addresses [hidden]="activeTab() !== 'addresses'" />
+      <app-profile-content [activeTab]="activeTab()" />
     </main>
   </div>
 </div>

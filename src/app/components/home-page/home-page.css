@@ -1,10 +1,142 @@
-.carousel {
-  max-height: 500px;
+.cake img{
+  height: 1000px;
+  width: auto;
+  object-fit:fill;
 }
 
-.carousel-item img {
-  height: 500px;
+
+.background {
+  background-color: white;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.about-content img {
+  height: 800px;
+  object-fit:fill;
+}
+
+.about-text {
+  display: flex;
+  flex-direction:column;
+  max-width: 500px;
+}
+
+
+
+.about-hero {
+  position: relative;
+  height: 80vh;
   width: 100%;
+  overflow: hidden;
+}
+
+/* image */
+.about-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: 35%;
+  opacity: 0.67; /* makes image slightly transparent */
+}
+
+/* center overlay */
+.about-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  color: white;
+  max-width: 600px;
+  padding: 20px;
+}
+
+/* optional: improve readability */
+.about-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(195, 142, 62, 0);
+}
+
+/* keep text above overlay */
+.about-overlay {
+  z-index: 2;
+}
+
+/* button stays same */
+.about-btn {
+  margin-top: 20px;
+  padding: 10px 50px;
+  border: none;
+  background-color: #e4dfc4;
+  color: black;
+  border-radius: 20px;
+}
+
+.about-btn:hover {
+  background-color: #ece5e5;
+}
+/* HERO CONTAINER */
+.cake-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* IMAGE */
+.cake-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* DARK OVERLAY (makes text readable) */
+.cake-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.253);
+}
+
+/* TEXT ON TOP */
+.cake-overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 13%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  color: white;
+  z-index: 2;
+  max-width: 600px;
+}
+
+/* TITLE STYLE */
+.cake-overlay-text h1 {
+  font-size: 3rem;
+  text-shadow: 0 4px 20px rgba(248, 241, 241, 0.6);
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.carousel .card img {
+  height: 450px;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+.location {
+  background-color: #f5f5eb;
+  padding: 50px;
 }

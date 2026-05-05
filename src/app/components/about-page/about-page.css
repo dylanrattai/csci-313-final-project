@@ -1,0 +1,75 @@
+.store {
+  position: relative;
+  width: 100%;
+}
+
+/* image */
+.store img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+
+  filter: brightness(75%) sepia(30%) saturate(120%);
+}
+
+/* overlay box */
+.store-overlay-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(242, 240, 236, 0.848); /* slightly tinted white box */
+  padding: 30px;
+  max-width: 8000px;
+  text-align: center;
+  border-radius: 12px;
+
+  backdrop-filter: blur(8px); /* glass effect (modern look) */
+}
+
+/* text styling */
+.store-overlay-box h2 {
+  margin-bottom: 10px;
+}
+
+.store-overlay-box p {
+  margin-bottom: 20px;
+}
+
+.candle-img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+
+  filter: brightness(75%) contrast(105%);
+}
+
+.location-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* vertical letters */
+.location-side {
+  display: flex;
+  flex-direction: column;
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+  padding-left: 20px;
+}
+
+/* cards spacing fix */
+.location-section .container {
+  flex: 1;
+}
+
+/* card image style */
+.location-card img {
+  height: 220px;
+  object-fit: cover;
+}

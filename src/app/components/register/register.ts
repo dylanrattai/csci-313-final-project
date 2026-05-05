@@ -1,14 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth/authService';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PasswordHelper } from '../../core/services/passwordService/password-helper';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +13,7 @@ import {
 export class Register {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly passwordHelper = inject(PasswordHelper);
 
   loading = false;
   error: string | null = null;
@@ -38,7 +33,9 @@ export class Register {
         validators: [Validators.required],
       }),
     },
-    { validators: [passwordMatchValidator] },
+    {
+      validators: [this.passwordHelper.passwordMatchValidator('password', 'confirmPassword')],
+    },
   );
 
   async onSubmit() {
@@ -76,14 +73,3 @@ export class Register {
     return control.invalid && control.touched;
   }
 }
-
-const passwordMatchValidator = (control: AbstractControl): ValidationErrors | null => {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
-
-  if (!password || !confirmPassword) {
-    return null;
-  }
-
-  return password === confirmPassword ? null : { passwordMismatch: true };
-};

@@ -16,4 +16,4 @@ export class Profile {
   }
 }
 
-export type ProfileTab = 'account' | 'addresses' | 'orders' | 'logout';
+export type ProfileTab = 'account' | 'addresses' | 'orders';

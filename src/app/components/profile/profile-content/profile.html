@@ -1,49 +1,48 @@
 <div class="card shadow-sm">
   <div class="card-body">
-    @switch (activeTab()) {
-      @case ('account') {
-        <app-account [initialData]="user()" />
-      }
-
-      @case ('addresses') {
-        <h2 class="h5 mb-3">Addresses</h2>
-        <div class="alert alert-light border mb-0">Address content placeholder.</div>
-      }
-
-      @case ('orders') {
-        <h2 class="h5 mb-3">Orders</h2>
-        <div class="table-responsive">
-          <table class="table table-sm align-middle mb-0">
-            <thead>
-              <tr>
-                <th scope="col">Order</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="text-end">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#000123</td>
-                <td class="text-body-secondary">2026-04-18</td>
-                <td><span class="badge text-bg-success">Delivered</span></td>
-                <td class="text-end">$89.99</td>
-              </tr>
-              <tr>
-                <td>#000124</td>
-                <td class="text-body-secondary">2026-04-27</td>
-                <td><span class="badge text-bg-warning">Processing</span></td>
-                <td class="text-end">$42.50</td>
-              </tr>
-            </tbody>
-          </table>
+    @if (activeTab() === 'account') {
+      <div class="container-fluid px-0">
+        <div class="mb-4">
+          <h2 class="h5 mb-3">Account Details</h2>
+          <app-account [initialData]="user()" />
         </div>
-      }
 
-      @case ('logout') {
-        <h2 class="h5 mb-3 text-danger">Logout</h2>
-        <div class="alert alert-warning mb-0">Logout placeholder.</div>
-      }
+        <div>
+          <h2 class="h5 mb-3">Change Password</h2>
+          <app-change-password [initialData]="user()" />
+        </div>
+      </div>
+    } @else if (activeTab() === 'orders') {
+      <h2 class="h5 mb-3">Orders</h2>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#000123</td>
+              <td class="text-body-secondary">2026-04-18</td>
+              <td><span class="badge text-bg-success">Delivered</span></td>
+              <td class="text-end">$89.99</td>
+            </tr>
+            <tr>
+              <td>#000124</td>
+              <td class="text-body-secondary">2026-04-27</td>
+              <td><span class="badge text-bg-warning">Processing</span></td>
+              <td class="text-end">$42.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    } @else if (activeTab() === 'logout') {
+      <h2 class="h5 mb-3 text-danger">Logout</h2>
+      <div class="alert alert-warning mb-0">Logout placeholder.</div>
     }
   </div>
 </div>

@@ -61,7 +61,6 @@ export class Account {
       return;
     }
 
-    // If email changed, password is required
     if (this.emailChanged && !this.form.get('password')?.value?.trim()) {
       this.error = 'Password is required to change your email.';
       return;
@@ -93,7 +92,12 @@ export class Account {
           throw new Error('No user is currently logged in.');
         }
 
-        await this.auth.reauthenticate(this.initialEmail, password);
+        const credentialEmail = user.email;
+        if (!credentialEmail) {
+          throw new Error('Authenticated user has no email.');
+        }
+
+        await this.auth.reauthenticate(credentialEmail, password);
         await this.auth.updateUserEmail(trimmedEmail);
         userUpdate.email = trimmedEmail;
       }

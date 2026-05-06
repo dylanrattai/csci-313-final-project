@@ -1,1 +1,17 @@
-<p>admin-view-orders works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Orders</title>
+  </head>
+  <body>
+    <h1>Orders</h1>
+    <div class="scrollable">
+      @for (order of orders(); track order.order_id) {
+      <app-admin-order-table [order]="order" [usersMap]="usersMap" [itemsMap]="itemsMap">
+      </app-admin-order-table>
+      }
+    </div>
+  </body>
+</html>

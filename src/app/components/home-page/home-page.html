@@ -1,76 +1,247 @@
-<div id="carouselExample" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="images/cake8.jpg" class="d-block w-100" alt="wow thsi is awefa gereatea" />
-    </div>
-    <div class="carousel-item">
-      <img src="images/cake6.jpg" class="d-block w-100" alt="wow thsi is awefa gereatea" />
-    </div>
-    <div class="carousel-item">
-      <img src="images/cake7.jpg" class="d-block w-100" alt="wow thsi is awefa gereatea" />
-    </div>
+<section class="cake-hero">
+  <img src="images/cakewithchoc.jpg" class="cake-img" alt="cake" />
+
+  <div class="cake-overlay-text">
+    <h1 class="font">The Bake Shop</h1>
+    <p class="font">Custom cakes made with love, crafted for every celebration.</p>
+    <button class="about-btn">Order Now</button>
   </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#carouselExample"
-    data-bs-slide="prev"
-  >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#carouselExample"
-    data-bs-slide="next"
-  >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
-
-<section class="featured py-5">
+</section>
+<section class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Our Favorites</h2>
-
     <div class="row g-4">
-      <!-- Card 1 -->
       <div class="col-12 col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="images/Mcake.jpg" class="card-img-top" alt="Wedding Cake" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Wedding Cakes</h5>
-            <p class="card-text text-muted">Elegant and delicious for your special day</p>
-            <button class="btn btn-primary">Order Now</button>
-          </div>
+        <div
+          class="card h-100 shadow-sm p-3 font border-0"
+          style="background: rgb(255, 255, 255); font-style: italic"
+        >
+          <p style="font-size: larger">
+            “We ordered a custom cake for our wedding, and it honestly exceeded every expectation we
+            had. The design was elegant and exactly what we envisioned, but what really stood out
+            was the taste. The cake was incredibly moist, perfectly balanced, and not overly sweet
+            like many others we’ve tried. Our guests are still talking about it weeks later, and
+            several asked where we got it from. It truly made our special day even more memorable.”
+          </p>
+          <strong>— Sarah M.</strong>
         </div>
       </div>
 
-      <!-- Card 2 -->
       <div class="col-12 col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="images/Bcake.jpg" class="card-img-top" alt="Birthday Cake" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Birthday Cakes</h5>
-            <p class="card-text text-muted">Perfect for any celebration</p>
-            <button class="btn btn-primary">Order Now</button>
-          </div>
+        <div
+          class="card h-100 shadow-sm p-3 font border-0"
+          style="background: rgb(255, 255, 255); font-style: italic"
+        >
+          <p style="font-size: larger">
+            “I ordered a birthday cake for my son, and the entire experience was fantastic from
+            start to finish. The team was easy to work with and paid attention to every detail I
+            requested. When we finally saw the cake, it looked amazing—but the flavor was even
+            better. Rich, fresh, and clearly made with high-quality ingredients. Everyone at the
+            party loved it, and we didn’t have a single slice left by the end of the night.”
+          </p>
+          <strong>— Daniel R.</strong>
         </div>
       </div>
 
-      <!-- Card 3 -->
       <div class="col-12 col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="images/Ccake.jpg" class="card-img-top" alt="Custom Cake" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Custom Cakes</h5>
-            <p class="card-text text-muted">Tailored to your specifications</p>
-            <button class="btn btn-primary">Order Now</button>
-          </div>
+        <div
+          class="card h-100 shadow-sm p-3 font border-0"
+          style="background: rgb(255, 255, 255); font-style: italic"
+        >
+          <p style="font-size: larger">
+            “This has quickly become my go-to bakery for any celebration. I recently ordered a
+            custom cake, and they absolutely nailed both the design and the flavor. It looked
+            exactly like the inspiration I sent, and the taste was incredible—light, fresh, and
+            perfectly sweet. You can really tell everything is made with care and attention to
+            detail. I’ve already recommended them to friends and will definitely be back again.”
+          </p>
+          <strong>— Jessica L.</strong>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<section class="about-hero">
+  <img src="images/cakeondisplay.jpg" class="about-img" alt="Cake" />
+
+  <div class="about-overlay">
+    <h1 class="font" style="color: rgb(9, 6, 3); padding-bottom: 25px">About Us</h1>
+    <p class="font">
+      The Bake Shop creates fresh, handcrafted cakes for every occasion. Made with care, designed to
+      impress, and baked fresh every day.
+    </p>
+    <button class="about-btn" routerLink="about">Read More</button>
+  </div>
+</section>
+
+<section class="py-5" style="background-color: white">
+  <div class="container">
+    <h2 class="text-center mb-4 font">Menu Spotlights</h2>
+
+    <div id="cakeCardCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- ===== SLIDE 1 ===== -->
+        <div class="carousel-item active">
+          <div class="row g-4">
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-50">
+                <img src="images/cakewithcandles.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Chocolate Cake</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img src="images/barecakewithberries.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Strawberry Cake</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img src="images/cakewithcherry.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Vanilla Cake</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SLIDE 2 ===== -->
+        <div class="carousel-item">
+          <div class="row g-4">
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img src="images/cake8.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Red Velvet</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img src="images/cake7.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Blueberry Cake</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img src="images/cake6.jpg" class="card-img-top" />
+                <div class="card-body text-center">
+                  <h5>Custom Cake</h5>
+                </div>
+                <button
+                  type="button"
+                  class="btn"
+                  style="
+                    background-color: rgb(45, 28, 20);
+                    color: white;
+                    --bs-btn-padding-y: 0.5rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 01rem;
+                  "
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- controls -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#cakeCardCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#cakeCardCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+</section>
+

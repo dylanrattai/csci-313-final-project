@@ -1,6 +1,11 @@
-<div class="auth-shell container py-5">
+<section class="login-hero">
+  <div class="image-filter">
+      <img src="images/maybeinside.jpg" class="login-bg" alt="background" />
+  </div>
+  <div class="auth-shell container py-5">
+  
   <div class="auth-card mx-auto">
-    <h2 class="mb-2 text-center">Sign Up</h2>
+    <h2 class="mb-2 text-center font">Sign Up</h2>
     <p class="text-center text-secondary mb-4">Create your shop account and profile.</p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
@@ -56,7 +61,7 @@
         <div class="invalid-feedback">Passwords must match.</div>
       </div>
 
-      <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
+      <button class="btn button-color w-100" type="submit" [disabled]="loading">
         @if (loading) {
           Creating account...
         } @else {
@@ -72,3 +77,5 @@
     <a class="d-block text-center mt-3" routerLink="/login">Already have an account? Login</a>
   </div>
 </div>
+
+</section>

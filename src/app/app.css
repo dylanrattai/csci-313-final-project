@@ -1,15 +1,30 @@
+
+
 .navbar {
-  background-color: #fcb46c;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 10px 16px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  /* background: rgba(255, 255, 255, 0.15); translucent */
+  backdrop-filter: blur(10px); /* glass effect */
+
+  transition: background 0.3s ease;
+}
+
+.navbar:hover {
+  background: rgba(236, 236, 224, 0.85); /* grey */
 }
 
 .navbar-brand {
   color: #2b2b2b;
-  font-weight: 600;
+  font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
+  font-size: 1.5rem; /* bigger logo text */
+
+
 }
 
 .navbar-brand img {
@@ -20,19 +35,15 @@
 
 .navbar .nav-link {
   color: #2b2b2b;
-  font-weight: 500;
-  border-radius: 8px;
-  padding: 6px 12px;
-  transition: background-color 0.2s ease;
-}
-
-.navbar .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.35);
-  color: #1f1f1f;
+  font-weight: 900;
+  /* border-radius: 8px; */
+  /* padding: 6px 12px; */
+  /* transition: background-color 0.2s ease; */
+  font-size: 1rem;
 }
 
 .custom-red {
-  background-color: #e05a47;
+  background-color: rgb(184, 176, 162);
   color: white;
   border-radius: 999px;
   padding: 6px 16px;

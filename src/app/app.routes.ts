@@ -32,14 +32,16 @@ export const routes: Routes = [
     data: { role: 'employee' },
   },
   {
-    path:'about',
+    path: 'about',
     component: AboutPage,
-    title: 'About'
+    title: 'About',
   },
-    {
-    path:'contact',
+  {
+    path: 'contact',
     component: ContactPage,
-    title: 'Contact'
+    title: 'Contact',
+  },
+  {
     path: 'profile',
     component: Profile,
     title: 'Profile',

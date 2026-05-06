@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CakeCustomizationFormControls, DecorationItem } from '../../../core/models/pricing-config';
 
@@ -9,7 +10,7 @@ type DecorationOption = Omit<DecorationItem, 'name'> & {
 
 @Component({
   selector: 'app-customization-options',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './customization-options.html',
   styleUrl: './customization-options.css',
 })
@@ -73,9 +74,5 @@ export class CustomizationOptions {
   isDecorationSelected(name: string): boolean {
     const decorations = this.form().controls.decorations.value;
     return decorations.some((item) => item.name === name);
-  }
-
-  formatPrice(value: number): string {
-    return `$${value.toFixed(2)}`;
   }
 }

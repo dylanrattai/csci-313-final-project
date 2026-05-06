@@ -8,6 +8,7 @@ import { AboutPage } from './components/about-page/about-page';
 import { ContactPage } from './components/contact-page/contact-page';
 import { Profile } from './components/profile/profile/profile';
 import { CustomizationPage } from './components/cake-customization/customization-page/customization-page';
+import { Checkout } from './components/checkout/checkout';
 
 export const routes: Routes = [
   {
@@ -51,5 +52,10 @@ export const routes: Routes = [
     path: 'custom-cake',
     component: CustomizationPage,
     title: 'Customize Your Cake',
+  },
+  {
+    path: 'checkout',
+    component: Checkout,
+    title: 'Checkout',
   },
 ];

@@ -92,8 +92,12 @@ export class CartService {
       item_img_path: '', // can be set later or left empty for custom items
       name: `Custom ${customCakeData.cakeType} Cake - ${customCakeData.size}`,
       price: customCakeData.totalPrice,
-      message: customCakeData.message?.trim() || undefined,
     };
+
+    // Only add message if it has content (Firestore doesn't allow undefined)
+    if (customCakeData.message?.trim()) {
+      customCakeItem.message = customCakeData.message.trim();
+    }
 
     // Create the item in database
     await this.itemService.createItem(itemId, customCakeItem);
@@ -151,5 +155,12 @@ export class CartService {
    */
   clearCart(): void {
     this._cart.set(null);
+  }
+
+  /**
+   * Update the cart signal with a new order
+   */
+  updateCart(order: Order): void {
+    this._cart.set(order);
   }
 }

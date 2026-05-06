@@ -99,7 +99,9 @@
           <div class="decoration-item">
             <div>
               <strong>{{ option.name }}</strong>
-              <p>{{ option.description }} - {{ formatPrice(option.cost) }}</p>
+              <p>
+                {{ option.description }} - {{ option.cost | currency: 'USD' : 'symbol' : '1.2-2' }}
+              </p>
             </div>
             <button
               type="button"

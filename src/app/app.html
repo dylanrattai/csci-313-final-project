@@ -34,6 +34,10 @@
             </li>
 
             <li class="nav-item mx-1">
+              <a class="nav-link active" routerLink="/checkout">Cart</a>
+            </li>
+
+            <li class="nav-item mx-1">
               <a class="nav-link active" (click)="logout()">Logout</a>
             </li>
           } @else {
@@ -43,7 +47,7 @@
           }
           <li class="nav-item">
             <a class="btn rounded-pill ms-lg-3 custom-red" routerLink="/custom-cake"
-              >Place an Order</a
+              >Create a Custom Cake</a
             >
           </li>
         </ul>

@@ -1,0 +1,98 @@
+<div>
+  @if (success()) {
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+      {{ success() }}
+      <button type="button" class="btn-close" (click)="success.set(null)"></button>
+    </div>
+  }
+
+  @if (error) {
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+      {{ error }}
+      <button type="button" class="btn-close" (click)="error = null"></button>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="mb-3">
+      <label class="form-label" for="firstName">First Name</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="isInvalid('firstName')"
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+      />
+      @if (isInvalid('firstName')) {
+        <div class="invalid-feedback d-block">Please enter a first name.</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="lastName">Last Name</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="isInvalid('lastName')"
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+      />
+      @if (isInvalid('lastName')) {
+        <div class="invalid-feedback d-block">Please enter a last name.</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="phone">Phone</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="isInvalid('phone')"
+        id="phone"
+        type="tel"
+        formControlName="phone"
+      />
+      @if (isInvalid('phone')) {
+        <div class="invalid-feedback d-block">
+          Please enter a valid phone number (e.g., +1234567890).
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="isInvalid('email')"
+        id="email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        inputmode="email"
+      />
+      @if (isInvalid('email')) {
+        <div class="invalid-feedback d-block">Please enter a valid email address.</div>
+      }
+    </div>
+
+    @if (emailChanged) {
+      <div class="mb-3">
+        <label class="form-label" for="password">Current Password</label>
+        <input
+          class="form-control"
+          [class.is-invalid]="submitted && !form.get('password')?.value?.trim()"
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password to confirm email change"
+        />
+        @if (submitted && !form.get('password')?.value?.trim()) {
+          <div class="invalid-feedback d-block">Password is required to change your email.</div>
+        }
+      </div>
+    }
+
+    <div class="mb-3">
+      <button class="btn btn-primary" type="submit">Save Changes</button>
+    </div>
+  </form>
+</div>

@@ -6,6 +6,7 @@ import {
   EmailAuthProvider,
   onAuthStateChanged,
   reauthenticateWithCredential,
+  reload,
   sendEmailVerification,
   sendPasswordResetEmail,
   setPersistence,
@@ -124,9 +125,9 @@ export class AuthService {
     if (!user) {
       throw new Error('No user is currently logged in.');
     }
-
     try {
       await updateEmail(user, newEmail);
+      await reload(user);
     } catch (error: any) {
       throw new Error(this.mapError(error));
     }
@@ -169,6 +170,7 @@ export class AuthService {
     const userCred = EmailAuthProvider.credential(email, password);
     try {
       await reauthenticateWithCredential(user, userCred);
+      await reload(user);
     } catch (error: any) {
       throw new Error(this.mapError(error));
     }
@@ -198,6 +200,9 @@ export class AuthService {
 
       case 'auth/requires-recent-login':
         return 'Please log in again to continue';
+
+      case 'auth/operation-not-allowed':
+        return 'Email change is blocked by project settings. In Firebase Console, disable requiring verification before email change.';
 
       case 'auth/network-request-failed':
         return 'Network error. Check your connection';

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './components/home-page/home-page';
-import { Login } from './components/login/login';
-import { Register } from './components/register/register';
-import { StaffViewOrders } from './components/employee/staff-view-orders/staff-view-orders';
+import { Login } from './components/profile-components/login/login';
+import { Register } from './components/profile-components/register/register';
+import { StaffViewOrders } from './components/employee-components/staff-view-orders/staff-view-orders';
 import { roleGuard } from './core/guards/role-guard/role-guard';
 
 export const routes: Routes = [

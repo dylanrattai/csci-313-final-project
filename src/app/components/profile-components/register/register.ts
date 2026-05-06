@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/services/auth/authService';
+import { AuthService } from '../../../core/services/auth/authService';
 import {
   AbstractControl,
   FormControl,
@@ -38,7 +38,7 @@ export class Register {
         validators: [Validators.required],
       }),
     },
-    { validators: [passwordMatchValidator] },
+    { validators: [passwordMatchValidator] }
   );
 
   async onSubmit() {

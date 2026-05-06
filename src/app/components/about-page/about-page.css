@@ -1,3 +1,45 @@
+/* SECTION GRID LAYOUT */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 380px);
+  gap: 0;
+  width: 1000px;
+}
+
+/* GRID IMAGES */
+.grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* BUTTON STYLE */
+.cupcake-btn {
+  background-color: rgb(45, 28, 20);
+  color: white;
+  width: fit-content;
+  padding: 10px 20px;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.cupcake-btn:hover {
+  opacity: 0.85;
+}
+
+/* ALIGN ROW PROPERLY */
+.cupcake .row {
+  align-items: center;
+}
+
+/* OPTIONAL: prevent weird spacing on small screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-rows: repeat(2, 150px);
+  }
+}
 .store {
   position: relative;
   width: 100%;
@@ -10,7 +52,7 @@
   object-fit: cover;
   display: block;
 
-  filter: brightness(75%) sepia(30%) saturate(120%);
+  filter: brightness(70%) sepia(30%) saturate(100%);
 }
 
 /* overlay box */
@@ -20,7 +62,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  background: rgba(242, 240, 236, 0.848); /* slightly tinted white box */
+  background: rgba(248, 244, 233, 0.164); /* slightly tinted white box */
   padding: 30px;
   max-width: 8000px;
   text-align: center;
@@ -38,14 +80,6 @@
   margin-bottom: 20px;
 }
 
-.candle-img {
-  width: 100%;
-  height: 450px;
-  object-fit: cover;
-  border-radius: 12px;
-
-  filter: brightness(75%) contrast(105%);
-}
 
 .location-section {
   display: flex;
@@ -53,23 +87,26 @@
   gap: 40px;
 }
 
-/* vertical letters */
-.location-side {
-  display: flex;
-  flex-direction: column;
-  font-size: 2.5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  padding-left: 20px;
-}
 
-/* cards spacing fix */
-.location-section .container {
-  flex: 1;
-}
 
 /* card image style */
 .location-card img {
   height: 220px;
   object-fit: cover;
+}
+
+.story {
+  text-align: center;
+  padding: 100px 300px;
+}
+
+.grandpa img{
+  height: 100%;
+  width: 800px;
+  display: block;
+  margin: 0 auto;
+  filter: brightness(75%) sepia(30%) saturate(120%);
+  padding-bottom: 50px;
+  padding-top: 50px;
+
 }

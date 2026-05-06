@@ -1,50 +1,32 @@
-<div class="auth-shell container py-5">
-  <div class="auth-card mx-auto">
-    <h2 class="mb-2 text-center">Login</h2>
-    <p class="text-center text-secondary mb-4">Sign in to manage your account and profile.</p>
+<section class="login-hero">
+  <div class="image-filter">
+      <img src="images/maybeinside.jpg" class="login-bg" alt="background" />
+  </div>
+  <div class="auth-card">
+    <h2 class="mb-2 text-center font">Login</h2>
+    <p class="text-center text-secondary mb-4">
+      Sign in to manage your account and profile.
+    </p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       @if (error) {
-        <div class="alert alert-danger py-2" role="alert" aria-live="polite">
+        <div class="alert alert-danger py-2">
           {{ error }}
         </div>
       }
 
       <div class="mb-3">
-        <label class="form-label" for="email">Email</label>
-        <input
-          class="form-control"
-          [class.is-invalid]="isInvalid('email')"
-          id="email"
-          type="email"
-          formControlName="email"
-          autocomplete="email"
-          inputmode="email"
-          required
-        />
-        <div class="invalid-feedback">Enter a valid email address.</div>
+        <label class="form-label ">Email</label>
+        <input class="form-control" type="email" formControlName="email" />
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-        <input
-          class="form-control"
-          [class.is-invalid]="isInvalid('password')"
-          id="password"
-          type="password"
-          formControlName="password"
-          autocomplete="current-password"
-          required
-        />
-        <div class="invalid-feedback">Password is required.</div>
+        <label class="form-label ">Password</label>
+        <input class="form-control" type="password" formControlName="password" />
       </div>
 
-      <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
-        @if (loading) {
-          Logging in...
-        } @else {
-          Login
-        }
+      <button class="btn button-color w-100" type="submit" [disabled]="loading">
+        Login
       </button>
 
       <button class="btn btn-outline-secondary w-100 mt-2" type="button" routerLink="/">
@@ -52,6 +34,8 @@
       </button>
     </form>
 
-    <a class="d-block text-center mt-3" routerLink="/register">Don't have an account? Sign Up</a>
+    <a class="d-block text-center mt-3" routerLink="/register">
+      Don't have an account? Sign Up
+    </a>
   </div>
-</div>
+</section>

@@ -1,0 +1,50 @@
+<div class="price-breakdown-container">
+  <h2>Your Cake</h2>
+  @if (validationErrors().length) {
+    <div class="validation-errors">
+      <strong>Required selections</strong>
+      <ul>
+        @for (error of validationErrors(); track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+  @if (feedback()) {
+    <div
+      class="feedback"
+      [class.feedback-success]="feedback()?.type === 'success'"
+      [class.feedback-error]="feedback()?.type === 'error'"
+    >
+      <span>{{ feedback()?.text }}</span>
+      <button type="button" class="feedback-dismiss" (click)="clearFeedback()">Dismiss</button>
+    </div>
+  }
+  <div class="price-breakdown">
+    <div class="price-item">
+      <span>Base Price: {{ cakeType() }}</span>
+      <span>{{ basePrice() | currency }}</span>
+    </div>
+    <div class="price-item">
+      <span>Flavor:</span>
+      <span>{{ flavorPrice() | currency }}</span>
+    </div>
+    <div class="price-item">
+      <span>Frosting:</span>
+      <span>{{ frostingPrice() | currency }}</span>
+    </div>
+    <div class="price-item">
+      <span>Decoration:</span>
+      <span>{{ decorationPrice() | currency }}</span>
+    </div>
+    <div class="price-item">
+      <span>Total:</span>
+      <span>{{ totalPrice() | currency }}</span>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" [disabled]="!canAddToCart()" (click)="addToCart()">
+      Add to Cart
+    </button>
+  </div>
+</div>

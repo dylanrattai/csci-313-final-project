@@ -4,4 +4,5 @@ export interface CustomCakeItem {
   item_img_path: string;
   name: string;
   price: number;
+  message?: string;
 }

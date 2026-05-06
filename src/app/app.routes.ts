@@ -7,6 +7,7 @@ import { roleGuard } from './core/guards/role-guard/role-guard';
 import { AboutPage } from './components/about-page/about-page';
 import { ContactPage } from './components/contact-page/contact-page';
 import { Profile } from './components/profile/profile/profile';
+import { CustomizationPage } from './components/cake-customization/customization-page/customization-page';
 
 export const routes: Routes = [
   {
@@ -45,5 +46,10 @@ export const routes: Routes = [
     path: 'profile',
     component: Profile,
     title: 'Profile',
+  },
+  {
+    path: 'custom-cake',
+    component: CustomizationPage,
+    title: 'Customize Your Cake',
   },
 ];

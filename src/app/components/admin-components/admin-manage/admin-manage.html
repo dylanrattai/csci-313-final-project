@@ -1,1 +1,9 @@
-<p>admin-manage works!</p>
+<h1>Manage</h1>
+<h2>Manage x</h2>
+<div class="users-container">
+  @for (user of users(); track user.id) {
+  <div class="account-tile">
+    <app-admin-manage-acounts [user]="user" [usersMap]="usersMap"></app-admin-manage-acounts>
+  </div>
+  }
+</div>

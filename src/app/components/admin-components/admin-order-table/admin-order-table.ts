@@ -13,7 +13,6 @@ import { CustomCakeItem } from '../../../core/models/custom_cake_item';
 export class AdminOrderTable {
   @Input() order!: Order;
 
-  // 🔑 NEW: lookup maps
   @Input() usersMap!: Map<string, AppUser>;
   @Input() itemsMap!: Map<string, CustomCakeItem>;
 

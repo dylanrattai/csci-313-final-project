@@ -1,0 +1,5 @@
+button.selected {
+  background: darkslategray; /* gray highlight */
+  color: white;
+  border-color: darkslategray;
+}

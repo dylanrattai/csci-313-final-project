@@ -21,8 +21,11 @@
       <tr>
         <td>Display Item:</td>
         <td>
-          <button (click)="setNewDisplay(true)">Yes</button
-          ><button (click)="setNewDisplay(false)">No</button>
+          <button (click)="setNewDisplay(true)" [class.selected]="newDisplayOnMenu === true">
+            Yes</button
+          ><button (click)="setNewDisplay(false)" [class.selected]="newDisplayOnMenu === false">
+            No
+          </button>
         </td>
       </tr>
       <tr>

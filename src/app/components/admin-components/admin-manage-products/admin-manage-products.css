@@ -16,3 +16,9 @@ button.warn {
   color: white;
   border-color: #ff0000;
 }
+
+button.selected {
+  background: darkslategray; /* gray highlight */
+  color: white;
+  border-color: darkslategray;
+}

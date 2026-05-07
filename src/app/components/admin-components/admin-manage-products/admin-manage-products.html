@@ -25,8 +25,10 @@
       <tr>
         <td>Display Item:</td>
         <td>
-          <button (click)="setDisplayInput(true)">Yes</button
-          ><button (click)="setDisplayInput(false)">No</button>
+          <button (click)="setDisplayInput(true)" [class.selected]="newDisplay === true">Yes</button
+          ><button (click)="setDisplayInput(false)" [class.selected]="newDisplay === false">
+            No
+          </button>
         </td>
       </tr>
       <tr>

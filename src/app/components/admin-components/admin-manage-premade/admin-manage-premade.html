@@ -5,11 +5,7 @@
       <tr>
         <td>Name:</td>
         <td>
-          <input
-            type="text"
-            [placeholder]="savedName"
-            (input)="setNameInput($event.target.value)"
-          />
+          <input type="text" [placeholder]="savedName" (input)="setNewName($event.target.value)" />
         </td>
       </tr>
       <tr>
@@ -18,15 +14,15 @@
           <input
             type="number"
             [placeholder]="savedPrice"
-            (input)="setPriceInput($event.target.value)"
+            (input)="setNewPrice($event.target.value)"
           />
         </td>
       </tr>
       <tr>
         <td>Display Item:</td>
         <td>
-          <button (click)="setDisplayInput(true)">Yes</button
-          ><button (click)="setDisplayInput(false)">No</button>
+          <button (click)="setNewDisplay(true)">Yes</button
+          ><button (click)="setNewDisplay(false)">No</button>
         </td>
       </tr>
       <tr>
@@ -35,7 +31,17 @@
           <input
             type="text"
             [placeholder]="savedImgPath"
-            (input)="setImgPathInput($event.target.value)"
+            (input)="setNewImgPath($event.target.value)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Item Description:</td>
+        <td>
+          <input
+            type="text"
+            [placeholder]="savedDescription"
+            (input)="setNewDescription($event.target.value)"
           />
         </td>
       </tr>
@@ -48,8 +54,9 @@
             [class.warn]="
               savedName !== newName ||
               savedPrice !== newPrice ||
-              savedDisplay !== newDisplay ||
-              savedImgPath !== newImgPath
+              savedDisplayOnMenu !== newDisplayOnMenu ||
+              savedImgPath !== newImgPath ||
+              savedDescription !== newDescription
             "
           >
             Confirm Changes

@@ -10,11 +10,10 @@ import { AppUser } from '../../../core/models/appUser';
 })
 export class AdminManageAcounts implements OnInit {
   @Input() user!: AppUser;
-  @Input() usersMap: Map<string, any> = new Map();
   newSelectedPermission: AppUser['role'] = 'customer';
   savedPermission: AppUser['role'] = 'customer';
   private userService = inject(UserService);
-  private cdr = inject(ChangeDetectorRef); // ← add this
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
     this.newSelectedPermission = this.user.role;
@@ -25,7 +24,7 @@ export class AdminManageAcounts implements OnInit {
     if (!this.user.id) return;
     await this.userService.updateUser(this.user.id, { role: permission });
     this.savedPermission = permission;
-    this.cdr.detectChanges(); // ← force update after async
+    this.cdr.detectChanges();
   }
 
   setAdmin() {

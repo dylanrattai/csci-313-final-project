@@ -1,0 +1,46 @@
+<h3>{{ user.firstName }} {{ user.lastName }}</h3>
+<table>
+  <tr>
+    <td>Set Permissions</td>
+  </tr>
+  <tr>
+    <td>
+      <button
+        type="button"
+        (click)="setCustomer()"
+        [class.active]="newSelectedPermission === 'customer'"
+      >
+        Customer
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button
+        type="button"
+        (click)="setEmployee()"
+        [class.active]="newSelectedPermission === 'employee'"
+      >
+        Employee
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button type="button" (click)="setAdmin()" [class.active]="newSelectedPermission === 'admin'">
+        Admin
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button
+        type="button"
+        (click)="confirmPermissionChange()"
+        [class.warn]="savedPermission !== newSelectedPermission"
+      >
+        Confirm Changes
+      </button>
+    </td>
+  </tr>
+</table>

@@ -36,6 +36,8 @@ export class AuthService {
 
   readonly isAdmin = computed(() => this._appUser()?.role === 'admin');
 
+  readonly isEmployee = computed(() => this._appUser()?.role === 'employee');
+
   private _isAuthReady = signal(false);
   readonly isAuthReady = this._isAuthReady.asReadonly();
 

@@ -1,51 +1,89 @@
-.cake img{
-  height: 1000px;
-  width: auto;
-  object-fit:fill;
-}
+/* ================= HERO SECTION ================= */
 
-
-.background {
-  background-color: white;
-}
-
-.about-content {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-top: 20px;
-}
-
-.about-content img {
-  height: 800px;
-  object-fit:fill;
-}
-
-.about-text {
-  display: flex;
-  flex-direction:column;
-  max-width: 500px;
-}
-
-
-
-.about-hero {
+.cake-hero {
   position: relative;
-  height: 80vh;
   width: 100%;
+  min-height: 100vh;
   overflow: hidden;
 }
 
-/* image */
-.about-img {
+.cake-img {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   object-fit: cover;
-  opacity: 0.67; /* makes image slightly transparent */
-  filter: brightness(75%) sepia(30%) saturate(120%);
+  display: block;
 }
 
-/* center overlay */
+/* Dark overlay */
+.cake-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* TEXT */
+.cake-overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  z-index: 2;
+  text-align: center;
+
+  color: white;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Responsive heading */
+.cake-overlay-text h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 0 4px 20px rgba(255, 252, 252, 0.4);
+}
+
+/* Responsive paragraph */
+.cake-overlay-text p {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  line-height: 1.6;
+}
+
+/* BUTTON */
+.about-btn {
+  margin-top: 20px;
+  padding: 12px 40px;
+  border: none;
+  background-color: #e4dfc4;
+  color: black;
+  border-radius: 25px;
+  transition: 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: #ece5e5;
+}
+
+/* ================= ABOUT SECTION ================= */
+
+.about-hero {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  overflow: hidden;
+}
+
+.about-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+  filter: brightness(60%) sepia(30%) saturate(100%);
+}
+
 .about-overlay {
   position: absolute;
   top: 50%;
@@ -54,82 +92,30 @@
 
   text-align: center;
   color: white;
-  max-width: 600px;
-  padding: 20px;
-}
 
-/* optional: improve readability */
-.about-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(195, 142, 62, 0);
-}
-
-/* keep text above overlay */
-.about-overlay {
-  text-shadow: 0 4px 20px rgba(248, 241, 241, 0.6);
+  width: 90%;
+  max-width: 700px;
   z-index: 2;
 }
 
-/* button stays same */
-.about-btn {
-  margin-top: 20px;
-  padding: 10px 50px;
-  border: none;
-  background-color: #e4dfc4;
-  color: black;
-  border-radius: 20px;
-}
-
-.about-btn:hover {
-  background-color: #ece5e5;
-}
-/* HERO CONTAINER */
-.cake-hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* IMAGE */
-.cake-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* DARK OVERLAY (makes text readable) */
-.cake-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.253);
-}
-
-/* TEXT ON TOP */
-.cake-overlay-text {
-  position: absolute;
-  top: 50%;
-  left: 13%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
+.about-overlay h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-shadow: 0 4px 20px rgba(68, 63, 63, 0.766);
   color: white;
-  z-index: 2;
-  max-width: 600px;
 }
 
-/* TITLE STYLE */
-.cake-overlay-text h1 {
-  font-size: 3rem;
-  text-shadow: 0 4px 20px rgba(248, 241, 241, 0.6);
-  font-family:Georgia, 'Times New Roman', Times, serif;
+.about-overlay p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: white;
+  text-shadow: 0 4px 20px rgba(22, 20, 20, 0.766);
+
 }
+
+/* ================= CAROUSEL ================= */
 
 .carousel .card img {
-  height: 450px;
+  height: 400px;
   object-fit: cover;
 }
 
@@ -138,7 +124,31 @@
   filter: invert(1);
 }
 
-.location {
-  background-color: #f5f5eb;
-  padding: 50px;
+@media (max-width: 768px) {
+
+  .cake-hero,
+  .cake-img {
+    height: 80vh;
+  }
+
+  .cake-overlay-text {
+    left: 5%;
+    right: 5%;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .about-hero,
+  .about-img {
+    height: 70vh;
+  }
+
+  .carousel .card img {
+    height: 300px;
+  }
+
+  .about-btn {
+    width: 100%;
+    max-width: 250px;
+  }
 }

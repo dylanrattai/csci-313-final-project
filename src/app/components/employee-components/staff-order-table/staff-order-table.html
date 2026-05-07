@@ -1,0 +1,51 @@
+<table class="order-table container">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th style="width: 300px">Customer</th>
+      <th style="width: 800px">Actions</th>
+      <th>Items</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{ order.order_id }}</td>
+
+      <td>
+        {{ usersMap.get(order.customer)?.firstName }}
+        {{ usersMap.get(order.customer)?.lastName }}
+      </td>
+
+      <td class="status-buttons">
+        <button (click)="setApproved()" [class.pending]="order.status === 'pending'">
+          Approved
+        </button>
+
+        <button (click)="setInProgress()" [class.progress]="order.status === 'in_progress'">
+          In Progress
+        </button>
+
+        <button (click)="setFinished()" [class.completed]="order.status === 'completed'">
+          Finished
+        </button>
+
+        <button (click)="setReceived()" [class.received]="order.status === 'received'">
+          Received
+        </button>
+      </td>
+
+      <td>
+        <div class="order-item">
+          <div class="order-items-grid">
+            @for (itemId of order.order_items; track itemId) {
+              <button type="button" class="order-item-btn" (click)="toggleItem(itemId)" [class.clicked]="isClicked(itemId)">
+                {{ itemsMap.get(itemId)?.name }}
+              </button>
+            }
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

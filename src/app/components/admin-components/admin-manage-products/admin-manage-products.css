@@ -1,0 +1,24 @@
+button {
+  margin-right: 6px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+button.active {
+  background: #007bff; /* blue highlight */
+  color: white;
+  border-color: #007bff;
+}
+button.warn {
+  background: #ff0000; /* red highlight */
+  color: white;
+  border-color: #ff0000;
+}
+
+button.selected {
+  background: darkslategray; /* gray highlight */
+  color: white;
+  border-color: darkslategray;
+}

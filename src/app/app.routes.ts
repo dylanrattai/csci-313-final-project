@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './components/home-page/home-page';
-import { Login } from './components/login/login';
-import { Register } from './components/register/register';
-import { StaffViewOrders } from './components/staff-view-orders/staff-view-orders';
+import { Login } from './components/profile-components/login/login';
+import { Register } from './components/profile-components/register/register';
+import { StaffViewOrders } from './components/employee-components/staff-view-orders/staff-view-orders';
 import { roleGuard } from './core/guards/role-guard/role-guard';
 import { AboutPage } from './components/about-page/about-page';
 import { ContactPage } from './components/contact-page/contact-page';
@@ -10,6 +10,8 @@ import { Profile } from './components/profile/profile/profile';
 import { CustomizationPage } from './components/cake-customization/customization-page/customization-page';
 import { Checkout } from './components/checkout/checkout';
 import { PremadeMenu } from './components/premade-menu/premade-menu';
+import { AdminViewOrders } from './components/admin-components/admin-view-orders/admin-view-orders';
+import { AdminManage } from './components/admin-components/admin-manage/admin-manage';
 
 export const routes: Routes = [
   {
@@ -40,19 +42,18 @@ export const routes: Routes = [
     data: { role: 'employee' },
   },
   {
-    path: 'about',
-    component: AboutPage,
-    title: 'About',
+    path: 'admin-view-orders',
+    component: AdminViewOrders,
+    title: 'Admin View Orders',
+    canActivate: [roleGuard],
+    data: { role: 'admin' },
   },
   {
-    path: 'contact',
-    component: ContactPage,
-    title: 'Contact',
-  },
-  {
-    path: 'profile',
-    component: Profile,
-    title: 'Profile',
+    path: 'admin-manage',
+    component: AdminManage,
+    title: 'Admin Manage',
+    canActivate: [roleGuard],
+    data: { role: 'admin' },
   },
   {
     path: 'custom-cake',

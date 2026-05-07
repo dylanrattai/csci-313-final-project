@@ -19,6 +19,18 @@
 
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          @if(auth.isAdmin()) {
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/admin-view-orders">Manage Orders</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/admin-manage">Admin Menu</a>
+          </li>
+          } @if(auth.isEmployee()) {
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/staff-view-orders">View Orders</a>
+          </li>
+          }
           <li class="nav-item mx-1">
             <a class="nav-link active" routerLink="about">About Us</a>
           </li>
@@ -41,9 +53,9 @@
               <a class="nav-link active" (click)="logout()">Logout</a>
             </li>
           } @else {
-            <li class="nav-item mx-1">
-              <a class="nav-link active" routerLink="/login">Login</a>
-            </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/login">Login</a>
+          </li>
           }
           <li class="nav-item">
             <a class="btn rounded-pill ms-lg-3 custom-red" routerLink="/custom-cake"

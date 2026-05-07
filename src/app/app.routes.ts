@@ -12,17 +12,17 @@ export const routes: Routes = [
   {
     path: '',
     component: HomePage,
-    title: 'Home',
+    title: 'Home', //done
   },
   {
     path: 'login',
     component: Login,
-    title: 'Login',
+    title: 'Login', //done
   },
   {
     path: 'register',
     component: Register,
-    title: 'Register',
+    title: 'Register', //done
   },
   {
     path: 'staff-view-orders',
@@ -34,16 +34,16 @@ export const routes: Routes = [
   {
     path: 'about',
     component: AboutPage,
-    title: 'About',
+    title: 'About', //done
   },
   {
     path: 'contact',
     component: ContactPage,
-    title: 'Contact',
+    title: 'Contact', //done
   },
   {
     path: 'profile',
     component: Profile,
-    title: 'Profile',
+    title: 'Profile', //done
   },
 ];

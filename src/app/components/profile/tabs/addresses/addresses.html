@@ -2,7 +2,7 @@
   <div class="col-12 col-lg-5">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h3 class="card-title h5 mb-3">{{ editingId() ? 'Edit Address' : 'Add Address' }}</h3>
+        <h3 class="card-title h5 mb-3 font">{{ editingId() ? 'Edit Address' : 'Add Address' }}</h3>
 
         @if (error()) {
           <div class="alert alert-danger" role="alert">{{ error() }}</div>
@@ -116,7 +116,7 @@
   <div class="col-12 col-lg-7">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h3 class="card-title h5 mb-3">Saved Addresses</h3>
+        <h3 class="card-title h5 mb-3 font">Saved Addresses</h3>
 
         @if (addresses().length === 0) {
           <p class="text-muted mb-0">No addresses saved yet.</p>

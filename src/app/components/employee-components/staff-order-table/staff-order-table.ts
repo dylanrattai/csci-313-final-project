@@ -38,4 +38,19 @@ export class StaffOrderTable {
   setReceived() {
     this.updateStatus('received');
   }
+
+
+clickedItems = new Set<string>();
+
+toggleItem(itemId: string) {
+  if (this.clickedItems.has(itemId)) {
+    this.clickedItems.delete(itemId);
+  } else {
+    this.clickedItems.add(itemId);
+  }
+}
+
+isClicked(itemId: string): boolean {
+  return this.clickedItems.has(itemId);
+}
 }

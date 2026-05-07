@@ -1,34 +1,132 @@
+.container {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+/* =========================
+   TABLE BASE
+========================= */
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  background-color: rgb(255, 253, 251);
+  table-layout:fixed;
+}
+
+.order-table th,
+.order-table td {
+  border: 1px solid #868080;
+  padding: 10px;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+.order-table thead {
+  background: #b5b0ab;
+}
+
+/* =========================
+   STATUS BUTTONS
+========================= */
+
+.status-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status-buttons button {
+  flex: 1 1 120px;
+  min-width: 120px;
+  height: 40px;
+
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid transparent;
+  border-radius: 4px;
+
+  cursor: pointer;
+  background: white;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: 0.2s ease;
+}
+
+.status-buttons button:hover {
+  filter: brightness(0.95);
+}
+
+/* STATUS COLORS */
+
+.status-buttons button.pending {
+  background: red;
+  color: white;
+  border-color: red;
+}
+
+.status-buttons button.progress {
+  background: #ffc107;
+  color: white;
+  border-color: #ffc107;
+}
+
+.status-buttons button.completed {
+  background: green;
+  color: white;
+  border-color: green;
+}
+
+.status-buttons button.received {
+  background: grey;
+  color: white;
+  border-color: grey;
+}
+
+/* =========================
+   ORDER ITEMS GRID
+========================= */
+
 .order-items {
-  max-height: 200px; /* controls scroll height */
+  max-height: 200px;
   overflow-y: auto;
   padding: 6px;
 }
 
 .order-items-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 wide */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
 }
 
-.order-item {
+.order-item-btn {
   border: 1px solid #ccc;
   padding: 6px;
   font-size: 12px;
   text-align: center;
-  background: #f9f9f9;
+
+  background: blue;
+  color: white;
   border-radius: 4px;
   word-break: break-word;
-}
-button {
-  margin-right: 6px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  background: white;
+
+  width: 100%;
   cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-button.active {
-  background: #007bff; /* blue highlight */
+
+.order-item-btn.clicked {
+  background: lightgray;
   color: white;
-  border-color: #007bff;
+  border-color: #888;
 }

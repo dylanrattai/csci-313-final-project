@@ -4,6 +4,5 @@ export interface AppUser {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  address?: string;
   role: 'customer' | 'employee' | 'admin';
 }

@@ -1,0 +1,226 @@
+/* =========================
+   GENERAL
+========================= */
+
+.background {
+  background-color: white;
+}
+
+.font {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* =========================
+   STORE HERO SECTION
+========================= */
+
+.store {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.store img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+
+  filter: brightness(70%) sepia(30%) saturate(100%);
+}
+
+/* OPTIONAL OVERLAY BOX */
+
+.store-overlay-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(248, 244, 233, 0.164);
+  padding: 30px;
+
+  width: 90%;
+  max-width: 700px;
+
+  text-align: center;
+  border-radius: 12px;
+
+  backdrop-filter: blur(8px);
+}
+
+.store-overlay-box h2 {
+  margin-bottom: 10px;
+}
+
+.store-overlay-box p {
+  margin-bottom: 20px;
+}
+
+/* =========================
+   STORY SECTION
+========================= */
+
+.story {
+  text-align: center;
+
+  padding: 80px 8%;
+
+  max-width: 1200px;
+  margin: auto;
+
+  line-height: 1.8;
+}
+
+/* =========================
+   CUPCAKE SECTION
+========================= */
+
+.cupcake {
+  background-color: rgb(255, 250, 232);
+}
+
+.cupcake .row {
+  align-items: center;
+}
+
+/* BUTTON */
+
+.cupcake-btn {
+  background-color: rgb(45, 28, 20);
+  color: white;
+
+  width: fit-content;
+
+  padding: 10px 20px;
+  border: none;
+
+  transition: 0.3s ease;
+}
+
+.cupcake-btn:hover {
+  opacity: 0.85;
+}
+
+/* =========================
+   GRID LAYOUT
+========================= */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 0px;
+
+  width: 100%;
+}
+
+.grid img {
+  width: 100%;
+  height: 110%;
+
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+
+  display: block;
+
+  border-radius: 1px;
+}
+
+/* =========================
+   FOUNDER SECTION
+========================= */
+
+.grandpa {
+  text-align: center;
+}
+
+.grandpa img {
+  width: 100%;
+  max-width: 800px;
+
+  height: auto;
+
+  display: block;
+  margin: 0 auto;
+
+  filter: brightness(75%) sepia(30%) saturate(120%);
+
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 992px) {
+
+  .story {
+    padding: 60px 6%;
+  }
+
+  .store img {
+    height: 65vh;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  /* STORY */
+
+  .story {
+    padding: 50px 20px;
+  }
+
+  /* STORE HERO */
+
+  .store img {
+    height: 55vh;
+  }
+
+  /* GRID */
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* CUPCAKE TEXT */
+
+  .cupcake .col-md-6:first-child {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .cupcake-btn {
+    margin: auto;
+  }
+
+  /* FOUNDER TEXT */
+
+  .grandpa div {
+    padding: 20px !important;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  /* GRID SINGLE COLUMN */
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .store img {
+    height: 45vh;
+  }
+
+  .story {
+    line-height: 1.6;
+  }
+
+}

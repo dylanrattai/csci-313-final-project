@@ -2,7 +2,7 @@
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg" data-bs-theme="light">
     <div class="container-fluid px-2">
-      <a class="navbar-brand" routerLink="">
+      <a class="navbar-brand font" routerLink="">
         <img src="images/BakeShopLogo.svg" alt="Logo" class="d-inline-block" />
         The Bake Shop
       </a>
@@ -23,10 +23,10 @@
             <a class="nav-link active" routerLink="">Menu</a>
           </li>
           <li class="nav-item mx-1">
-            <a class="nav-link active" routerLink="">About Us</a>
+            <a class="nav-link active" routerLink="about">About Us</a>
           </li>
           <li class="nav-item mx-1">
-            <a class="nav-link active" routerLink="">Contact</a>
+            <a class="nav-link active" routerLink="contact">Contact</a>
           </li>
           @if (auth.isLoggedIn()) {
             <li class="nav-item mx-1">
@@ -55,7 +55,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-light text-dark py-4 border-top">
+  <footer style="background-color: rgba(222, 220, 210, 0.599);" class="text-dark py-4 border-top">
     <div class="container">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <!-- Left Side -->
@@ -79,7 +79,9 @@
 
         <!-- Right Side -->
         <div>
-          <small class="text-muted">Made with Angular</small>
+          <small class="text-muted">Subscribe to our Newsletter <br></small>
+          <label for="email"></label>
+          <input type="text" id="email" name="email" placeholder="email@email.com" />
         </div>
       </div>
     </div>

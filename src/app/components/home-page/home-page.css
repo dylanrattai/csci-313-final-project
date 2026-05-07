@@ -1,10 +1,154 @@
-.carousel {
-  max-height: 500px;
+/* ================= HERO SECTION ================= */
+
+.cake-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.carousel-item img {
-  height: 500px;
+.cake-img {
   width: 100%;
+  height: 100vh;
   object-fit: cover;
-  object-position: 35%;
+  display: block;
+}
+
+/* Dark overlay */
+.cake-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* TEXT */
+.cake-overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  z-index: 2;
+  text-align: center;
+
+  color: white;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Responsive heading */
+.cake-overlay-text h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 0 4px 20px rgba(255, 252, 252, 0.4);
+}
+
+/* Responsive paragraph */
+.cake-overlay-text p {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  line-height: 1.6;
+}
+
+/* BUTTON */
+.about-btn {
+  margin-top: 20px;
+  padding: 12px 40px;
+  border: none;
+  background-color: #e4dfc4;
+  color: black;
+  border-radius: 25px;
+  transition: 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: #ece5e5;
+}
+
+/* ================= ABOUT SECTION ================= */
+
+.about-hero {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  overflow: hidden;
+}
+
+.about-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+  filter: brightness(60%) sepia(30%) saturate(100%);
+}
+
+.about-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  color: white;
+
+  width: 90%;
+  max-width: 700px;
+  z-index: 2;
+}
+
+.about-overlay h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-shadow: 0 4px 20px rgba(68, 63, 63, 0.766);
+  color: white;
+}
+
+.about-overlay p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: white;
+  text-shadow: 0 4px 20px rgba(22, 20, 20, 0.766);
+
+}
+
+/* ================= CAROUSEL ================= */
+
+.carousel .card img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+@media (max-width: 768px) {
+
+  .cake-hero,
+  .cake-img {
+    height: 80vh;
+  }
+
+  .cake-overlay-text {
+    left: 5%;
+    right: 5%;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .about-hero,
+  .about-img {
+    height: 70vh;
+  }
+
+  .carousel .card img {
+    height: 300px;
+  }
+
+  .about-btn {
+    width: 100%;
+    max-width: 250px;
+  }
 }

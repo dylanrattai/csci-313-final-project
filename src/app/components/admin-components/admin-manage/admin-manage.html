@@ -1,5 +1,7 @@
 <h1>Manage</h1>
 <h2>Manage x</h2>
+
+@if (displayPage === 'accounts') {
 <div class="users-container">
   @for (user of users(); track user.id) {
   <div class="account-tile">
@@ -7,3 +9,4 @@
   </div>
   }
 </div>
+}

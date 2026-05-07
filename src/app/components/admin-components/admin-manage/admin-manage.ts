@@ -14,6 +14,7 @@ export class AdminManage {
   private userService = new UserService();
   users = this.userService.users;
   usersMap = new Map<string, AppUser>();
+  displayPage: 'accounts' | 'products' = 'accounts';
 
   constructor() {
     this.loadData();

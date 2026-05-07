@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AddressService } from '../../../../core/services/addressService/address-service';
-import { Address } from '../../../../core/models/address';
+import { AddressService } from '../../../../../core/services/addressService/address-service';
+import { Address } from '../../../../../core/models/address';
 
 @Component({
   selector: 'app-addresses',

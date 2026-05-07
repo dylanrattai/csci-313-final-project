@@ -194,12 +194,6 @@ export class AuthService {
       case 'auth/weak-password':
         return 'Password must be at least 6 characters';
 
-      case 'auth/user-not-found':
-        return 'User not found';
-
-      case 'auth/wrong-password':
-        return 'Incorrect password';
-
       case 'auth/requires-recent-login':
         return 'Please log in again to continue';
 

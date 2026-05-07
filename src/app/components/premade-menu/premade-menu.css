@@ -1,0 +1,66 @@
+.title {
+  padding-top: 150px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.title h2 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Grid spacing improvement */
+.container {
+  padding: 20px;
+}
+
+/* Card styling */
+.card {
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.card-img-top {
+  height: 250px;
+}
+
+/* Body layout */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 16px;
+}
+
+/* Title */
+.card-body h5 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Button */
+.card-body .btn {
+  width: 100%;
+  max-width: 140px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* Text spacing */
+.card-body p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}

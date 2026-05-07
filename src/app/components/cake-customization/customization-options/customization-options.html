@@ -1,0 +1,123 @@
+<section class="customization-panel">
+  <header class="panel-header">
+    <h2>Customize Your Cake</h2>
+    <p>Choose the cake, flavor, frosting, and decorations.</p>
+  </header>
+
+  <form [formGroup]="form()" novalidate>
+    <div class="option-group">
+      <label for="cakeType">Cake Type <span class="required-mark">*</span></label>
+      <select id="cakeType" formControlName="cakeType">
+        <option value="">Select a cake type</option>
+        @for (option of cakeTypeOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+      @if (form().controls.cakeType.touched && form().controls.cakeType.invalid) {
+        <p class="field-error">Cake type is required.</p>
+      }
+    </div>
+
+    <div class="option-group">
+      <label for="cakeSize">Cake Size <span class="required-mark">*</span></label>
+      <select id="cakeSize" formControlName="size">
+        <option value="">Select a size</option>
+        @if (form().controls.cakeType.value === 'round') {
+          @for (option of roundSizeOptions; track option.value) {
+            <option [value]="option.value">Round: {{ option.label }}</option>
+          }
+        } @else {
+          @for (option of sheetSizeOptions; track option.value) {
+            <option [value]="option.value">Sheet: {{ option.label }}</option>
+          }
+        }
+      </select>
+      @if (form().controls.size.touched && form().controls.size.invalid) {
+        <p class="field-error">Cake size is required.</p>
+      }
+    </div>
+
+    <div class="option-group">
+      <label>Flavor <span class="required-mark">*</span></label>
+      <div class="option-grid">
+        @for (option of flavorOptions; track option.value) {
+          <button
+            type="button"
+            class="option-chip"
+            [class.is-active]="form().controls.flavor.value === option.value"
+            (click)="
+              form().controls.flavor.markAsTouched(); form().controls.flavor.setValue(option.value)
+            "
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+      @if (form().controls.flavor.touched && form().controls.flavor.invalid) {
+        <p class="field-error">Flavor is required.</p>
+      }
+    </div>
+
+    <div class="option-group">
+      <label>Frosting <span class="required-mark">*</span></label>
+      <div class="option-grid">
+        @for (option of frostingOptions; track option.value) {
+          <button
+            type="button"
+            class="option-chip"
+            [class.is-active]="form().controls.frosting.value === option.value"
+            (click)="
+              form().controls.frosting.markAsTouched();
+              form().controls.frosting.setValue(option.value)
+            "
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+      @if (form().controls.frosting.touched && form().controls.frosting.invalid) {
+        <p class="field-error">Frosting is required.</p>
+      }
+    </div>
+
+    <div class="option-group">
+      <label for="cakeMessage">Custom Message</label>
+      <textarea
+        id="cakeMessage"
+        rows="3"
+        maxlength="120"
+        placeholder="Write a message for the cake"
+        formControlName="message"
+      ></textarea>
+      <p class="help-text">Optional. This message will be saved on the custom cake item.</p>
+    </div>
+
+    <div class="option-group">
+      <label>Decorations</label>
+      <div class="decoration-list">
+        @for (option of decorationOptions; track option.name) {
+          <div class="decoration-item">
+            <div>
+              <strong>{{ option.name }}</strong>
+              <p>
+                {{ option.description }} - {{ option.cost | currency: 'USD' : 'symbol' : '1.2-2' }}
+              </p>
+            </div>
+            <button
+              type="button"
+              class="option-chip"
+              [class.is-active]="isDecorationSelected(option.name)"
+              (click)="toggleDecoration(option)"
+            >
+              @if (isDecorationSelected(option.name)) {
+                Remove
+              } @else {
+                Add
+              }
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </form>
+</section>

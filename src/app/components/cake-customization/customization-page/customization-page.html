@@ -1,0 +1,18 @@
+<div class="container py-4">
+  <div class="row g-4">
+    <main class="col-12 col-lg-8">
+      <app-customization-options [form]="cakeForm"></app-customization-options>
+    </main>
+    <aside class="col-12 col-lg-4">
+      <app-price-breakdown
+        [cakeType]="formValue().cakeType ?? ''"
+        [size]="formValue().size ?? ''"
+        [flavor]="formValue().flavor ?? ''"
+        [frosting]="formValue().frosting ?? ''"
+        [decorations]="formValue().decorations ?? []"
+        [message]="formValue().message ?? ''"
+        (added)="resetSelections()"
+      ></app-price-breakdown>
+    </aside>
+  </div>
+</div>

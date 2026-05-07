@@ -37,23 +37,20 @@ export class AddressService {
     const ref = doc(col); // auto-id
 
     await setDoc(ref, address);
-
-    await this.loadAddresses();
+    this._addresses.update((addresses) => [...addresses, { id: ref.id, ...address }]);
   }
 
   async updateAddress(id: string, address: Omit<Address, 'id'>): Promise<void> {
     const col = this.getCollection();
     await updateDoc(doc(col, id), address);
-
-    await this.loadAddresses();
+    this._addresses.update((addresses) =>
+      addresses.map((entry) => (entry.id === id ? { id, ...address } : entry)),
+    );
   }
 
   async deleteAddress(id: string): Promise<void> {
     const col = this.getCollection();
     await deleteDoc(doc(col, id));
-
-    await this.loadAddresses();
+    this._addresses.update((addresses) => addresses.filter((entry) => entry.id !== id));
   }
-
-
 }

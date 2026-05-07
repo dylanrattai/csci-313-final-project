@@ -1,0 +1,68 @@
+<div class="product-tile">
+  <h3>{{ product.name }}</h3>
+  <div class="edit-table">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" [placeholder]="savedName" (input)="setNewName($event.target.value)" />
+        </td>
+      </tr>
+      <tr>
+        <td>Price:</td>
+        <td>
+          <input
+            type="number"
+            [placeholder]="savedPrice"
+            (input)="setNewPrice($event.target.value)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Display Item:</td>
+        <td>
+          <button (click)="setNewDisplay(true)">Yes</button
+          ><button (click)="setNewDisplay(false)">No</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Image Path:</td>
+        <td>
+          <input
+            type="text"
+            [placeholder]="savedImgPath"
+            (input)="setNewImgPath($event.target.value)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Item Description:</td>
+        <td>
+          <input
+            type="text"
+            [placeholder]="savedDescription"
+            (input)="setNewDescription($event.target.value)"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <button
+            type="button"
+            (click)="confirmChanges()"
+            [class.warn]="
+              savedName !== newName ||
+              savedPrice !== newPrice ||
+              savedDisplayOnMenu !== newDisplayOnMenu ||
+              savedImgPath !== newImgPath ||
+              savedDescription !== newDescription
+            "
+          >
+            Confirm Changes
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

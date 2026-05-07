@@ -5,6 +5,7 @@ import { Register } from './components/profile-components/register/register';
 import { StaffViewOrders } from './components/employee-components/staff-view-orders/staff-view-orders';
 import { roleGuard } from './core/guards/role-guard/role-guard';
 import { AdminViewOrders } from './components/admin-components/admin-view-orders/admin-view-orders';
+import { AdminManage } from './components/admin-components/admin-manage/admin-manage';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,13 @@ export const routes: Routes = [
     path: 'admin-view-orders',
     component: AdminViewOrders,
     title: 'Admin View Orders',
+    canActivate: [roleGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'admin-manage',
+    component: AdminManage,
+    title: 'Admin Manage',
     canActivate: [roleGuard],
     data: { role: 'admin' },
   },

@@ -1,0 +1,61 @@
+<div class="product-tile">
+  <h3>{{ product.name }}</h3>
+  <div class="edit-table">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input
+            type="text"
+            [placeholder]="savedName"
+            (input)="setNameInput($event.target.value)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Price:</td>
+        <td>
+          <input
+            type="number"
+            [placeholder]="savedPrice"
+            (input)="setPriceInput($event.target.value)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Display Item:</td>
+        <td>
+          <button (click)="setDisplayInput(true)">Yes</button
+          ><button (click)="setDisplayInput(false)">No</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Image Path:</td>
+        <td>
+          <input
+            type="text"
+            [placeholder]="savedImgPath"
+            (input)="setImgPathInput($event.target.value)"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <button
+            type="button"
+            (click)="confirmChanges()"
+            [class.warn]="
+              savedName !== newName ||
+              savedPrice !== newPrice ||
+              savedDisplay !== newDisplay ||
+              savedImgPath !== newImgPath
+            "
+          >
+            Confirm Changes
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<h1>Manage</h1>
+
+<app-admin-manage-selector
+  [activeTab]="activeTab()"
+  (tabChange)="setTab($event)"
+></app-admin-manage-selector>
+
+@if (activeTab() === 'accounts') {
+<div class="users-container">
+  @for (user of users(); track user.id) {
+  <div class="account-tile">
+    <app-admin-manage-acounts [user]="user"></app-admin-manage-acounts>
+  </div>
+  }
+</div>
+
+} @else if(activeTab() === 'products') {
+<div class="products-container">
+  @for (item of items(); track item.item_id) {
+  <div class="item-tile">
+    <app-admin-manage-products [product]="item"></app-admin-manage-products>
+  </div>
+  } @for (premadeItem of premadeItems(); track premadeItem.premade_id) {
+  <div class="item-tile">
+    <app-admin-manage-premade [product]="premadeItem"></app-admin-manage-premade>
+  </div>
+  }
+</div>
+}

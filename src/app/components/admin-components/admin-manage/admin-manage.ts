@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AdminManageAcounts } from '../admin-manage-acounts/admin-manage-acounts';
 import { AdminManageProducts } from '../admin-manage-products/admin-manage-products';
+import { AdminManageSelector } from '../admin-manage-selector/admin-manage-selector';
 import { UserService } from '../../../core/services/userService/user-service';
 import { AppUser } from '../../../core/models/appUser';
 
 @Component({
   selector: 'app-admin-manage',
-  imports: [AdminManageAcounts, AdminManageProducts],
+  imports: [AdminManageAcounts, AdminManageProducts, AdminManageSelector],
   templateUrl: './admin-manage.html',
   styleUrl: './admin-manage.css',
 })
@@ -14,7 +15,12 @@ export class AdminManage {
   private userService = new UserService();
   users = this.userService.users;
   usersMap = new Map<string, AppUser>();
-  displayPage: 'accounts' | 'products' = 'accounts';
+
+  readonly activeTab = signal<AdminTab>('accounts');
+
+  setTab(tab: AdminTab) {
+    this.activeTab.set(tab);
+  }
 
   constructor() {
     this.loadData();
@@ -27,3 +33,4 @@ export class AdminManage {
     await this.userService.loadUsers();
   }
 }
+export type AdminTab = 'accounts' | 'products';

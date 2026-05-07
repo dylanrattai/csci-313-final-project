@@ -9,12 +9,18 @@ import { ContactPage } from './components/contact-page/contact-page';
 import { Profile } from './components/profile/profile/profile';
 import { CustomizationPage } from './components/cake-customization/customization-page/customization-page';
 import { Checkout } from './components/checkout/checkout';
+import { PremadeMenu } from './components/premade-menu/premade-menu';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomePage,
     title: 'Home',
+  },
+  {
+    path: 'menu',
+    component: PremadeMenu,
+    title: 'Menu'
   },
   {
     path: 'login',

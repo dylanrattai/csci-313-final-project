@@ -1,9 +1,11 @@
-<div class="checkout-container">
+<section class="background">
+  <div class="checkout-container">
   <div class="checkout-content">
-    <!-- Left Side: Order Form -->
+    <!-- ================= LEFT: FORM ================= -->
     <div class="checkout-form-section">
       <h2 class="form-title">Order Details</h2>
 
+      <!-- Alerts -->
       @if (submitError()) {
         <div class="alert alert-danger" role="alert">
           {{ submitError() }}
@@ -17,9 +19,10 @@
       }
 
       <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" class="checkout-form">
-        <!-- Delivery Type Selection -->
+        <!-- ================= DELIVERY ================= -->
         <div class="form-group">
-          <label for="deliveryType" class="form-label">Delivery Method</label>
+          <label class="form-label">Delivery Method</label>
+
           <div class="delivery-options">
             <div class="form-check">
               <input
@@ -29,8 +32,9 @@
                 value="pickup"
                 formControlName="deliveryType"
               />
-              <label class="form-check-label" for="pickup"> Pickup </label>
+              <label class="form-check-label" for="pickup">Pickup</label>
             </div>
+
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -39,35 +43,40 @@
                 value="delivery"
                 formControlName="deliveryType"
               />
-              <label class="form-check-label" for="delivery"> Delivery </label>
+              <label class="form-check-label" for="delivery">Delivery</label>
             </div>
           </div>
         </div>
 
-        <!-- Address Selection -->
+        <!-- Address (only for delivery) -->
         @if (deliveryType() === 'delivery') {
           <div class="form-group">
             <label for="addressId" class="form-label">
               Delivery Address <span class="required">*</span>
             </label>
+
             <select id="addressId" class="form-control" formControlName="addressId">
               <option value="">-- Select or Add New Address --</option>
+
               @for (address of addresses(); track address.id) {
                 <option [value]="address.id">
                   {{ address.line1 }}, {{ address.city }}, {{ address.state }} {{ address.zip }}
                 </option>
               }
             </select>
-            <a routerLink="/profile" class="add-address-link">Add New Address</a>
+
+            <a routerLink="/profile" class="add-address-link"> Add New Address </a>
+
             @if (checkoutForm.get('addressId')?.invalid && checkoutForm.get('addressId')?.touched) {
               <div class="invalid-feedback d-block">Address is required for delivery</div>
             }
           </div>
         }
 
-        <!-- Contact Information -->
+        <!-- ================= CONTACT ================= -->
         <div class="form-group">
-          <label for="email" class="form-label">Email <span class="required">*</span></label>
+          <label for="email" class="form-label"> Email <span class="required">*</span> </label>
+
           <input
             type="email"
             id="email"
@@ -79,6 +88,7 @@
 
         <div class="form-group">
           <label for="phone" class="form-label">Phone (Optional)</label>
+
           <input
             type="tel"
             id="phone"
@@ -86,6 +96,7 @@
             formControlName="phone"
             placeholder="1234567890"
           />
+
           @if (
             checkoutForm.get('phone')?.invalid &&
             checkoutForm.get('phone')?.touched &&
@@ -95,13 +106,14 @@
           }
         </div>
 
-        <!-- Payment Information (Mock) -->
+        <!-- ================= PAYMENT ================= -->
         <h3 class="form-section-title">Payment Information</h3>
 
         <div class="form-group">
-          <label for="cardNumber" class="form-label"
-            >Card Number <span class="required">*</span></label
-          >
+          <label for="cardNumber" class="form-label">
+            Card Number <span class="required">*</span>
+          </label>
+
           <input
             type="text"
             id="cardNumber"
@@ -110,6 +122,7 @@
             placeholder="1234567890123456"
             maxlength="16"
           />
+
           @if (checkoutForm.get('cardNumber')?.invalid && checkoutForm.get('cardNumber')?.touched) {
             <div class="invalid-feedback d-block">Enter a valid 16-digit card number</div>
           }
@@ -117,7 +130,10 @@
 
         <div class="form-row">
           <div class="form-group col">
-            <label for="cardExpiry" class="form-label">Exp. <span class="required">*</span></label>
+            <label for="cardExpiry" class="form-label">
+              Exp. <span class="required">*</span>
+            </label>
+
             <input
               type="text"
               id="cardExpiry"
@@ -126,6 +142,7 @@
               placeholder="MM/YY"
               maxlength="5"
             />
+
             @if (
               checkoutForm.get('cardExpiry')?.invalid && checkoutForm.get('cardExpiry')?.touched
             ) {
@@ -134,7 +151,8 @@
           </div>
 
           <div class="form-group col">
-            <label for="cardCVC" class="form-label">CVC <span class="required">*</span></label>
+            <label for="cardCVC" class="form-label"> CVC <span class="required">*</span> </label>
+
             <input
               type="text"
               id="cardCVC"
@@ -143,6 +161,7 @@
               placeholder="123"
               maxlength="3"
             />
+
             @if (checkoutForm.get('cardCVC')?.invalid && checkoutForm.get('cardCVC')?.touched) {
               <div class="invalid-feedback d-block">Enter a valid 3-digit CVC</div>
             }
@@ -151,14 +170,14 @@
       </form>
     </div>
 
-    <!-- Right Side: Order Summary -->
+    <!-- ================= RIGHT: SUMMARY ================= -->
     <div class="order-summary-section">
       <h2 class="summary-title">Order Summary</h2>
 
       @if (isCartEmpty()) {
         <div class="empty-cart">
           <p>Your cart is empty</p>
-          <a routerLink="/custom-cake" class="btn btn-primary">Continue Shopping</a>
+          <a routerLink="/custom-cake" class="btn btn-primary"> Continue Shopping </a>
         </div>
       } @else {
         <div class="order-items">
@@ -166,25 +185,26 @@
             <div class="order-item">
               <div class="item-details">
                 <p class="item-name">Custom Cake</p>
+
                 <div class="item-actions">
                   <button
                     type="button"
                     class="btn-action btn-edit"
                     (click)="editCustomCake(itemId)"
-                    title="Edit this item"
                   >
                     Edit
                   </button>
+
                   <button
                     type="button"
                     class="btn-action btn-delete"
                     (click)="deleteFromCart(itemId)"
-                    title="Remove this item from cart"
                   >
                     Delete
                   </button>
                 </div>
               </div>
+
               <p class="item-price">
                 {{ getItemPrice(itemId) | currency: 'USD' : 'symbol' : '1.2-2' }}
               </p>
@@ -194,7 +214,9 @@
 
         <div class="order-total">
           <h4>Total</h4>
-          <p class="total-price">{{ cartTotal() | currency: 'USD' : 'symbol' : '1.2-2' }}</p>
+          <p class="total-price">
+            {{ cartTotal() | currency: 'USD' : 'symbol' : '1.2-2' }}
+          </p>
         </div>
 
         <button
@@ -204,12 +226,14 @@
           (click)="placeOrder()"
         >
           @if (isSubmitting()) {
-            <span>Processing...</span>
+            Processing...
           } @else {
-            <span>Place Order</span>
+            Place Order
           }
         </button>
       }
     </div>
   </div>
 </div>
+
+</section>

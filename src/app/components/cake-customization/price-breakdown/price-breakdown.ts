@@ -91,17 +91,5 @@ export class PriceBreakdown {
       });
   }
 
-  addPremadeToCart(premade: PremadeMenu) {
-    this.cartService
-      .addPremadeToCart(premade)
-      .then(() => {
-        this.setFeedback('success', `${premade.name} added to cart.`);
-      })
-      .catch((err) => {
-        this.setFeedback(
-          'error',
-          err instanceof Error ? err.message : 'Unable to add premade cake to cart.',
-        );
-      });
-  }
+  
 }

@@ -20,15 +20,15 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item mx-1">
-            <a class="nav-link active" routerLink="">Menu</a>
-          </li>
-          <li class="nav-item mx-1">
             <a class="nav-link active" routerLink="about">About Us</a>
           </li>
           <li class="nav-item mx-1">
             <a class="nav-link active" routerLink="contact">Contact</a>
           </li>
           @if (auth.isLoggedIn()) {
+            <li class="nav-item mx-1">
+              <a class="nav-link active" routerLink="menu">Menu</a>
+            </li>
             <li class="nav-item mx-1">
               <a class="nav-link active" routerLink="/profile">Profile</a>
             </li>

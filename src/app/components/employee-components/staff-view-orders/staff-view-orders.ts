@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderService } from '../../core/services/orderService/order-service';
+import { OrderService } from '../../../core/services/orderService/order-service';
 import { StaffOrderTable } from '../staff-order-table/staff-order-table';
-import { UserService } from '../../core/services/userService/user-service';
-import { AppUser } from '../../core/models/appUser';
-import { CustomCakeItem } from '../../core/models/custom_cake_item';
-import { ItemService } from '../../core/services/itemService/item-service';
+import { UserService } from '../../../core/services/userService/user-service';
+import { AppUser } from '../../../core/models/appUser';
+import { CustomCakeItem } from '../../../core/models/custom_cake_item';
+import { ItemService } from '../../../core/services/itemService/item-service';
 
 @Component({
   selector: 'app-staff-view-orders',

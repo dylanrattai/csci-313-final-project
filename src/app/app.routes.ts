@@ -1,28 +1,26 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './components/home-page/home-page';
-import { Login } from './components/login/login';
-import { Register } from './components/register/register';
-import { StaffViewOrders } from './components/staff-view-orders/staff-view-orders';
+import { Login } from './components/profile-components/login/login';
+import { Register } from './components/profile-components/register/register';
+import { StaffViewOrders } from './components/employee-components/staff-view-orders/staff-view-orders';
 import { roleGuard } from './core/guards/role-guard/role-guard';
-import { AboutPage } from './components/about-page/about-page';
-import { ContactPage } from './components/contact-page/contact-page';
-import { Profile } from './components/profile/profile/profile';
+import { AdminViewOrders } from './components/admin-components/admin-view-orders/admin-view-orders';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomePage,
-    title: 'Home', //done
+    title: 'Home',
   },
   {
     path: 'login',
     component: Login,
-    title: 'Login', //done
+    title: 'Login',
   },
   {
     path: 'register',
     component: Register,
-    title: 'Register', //done
+    title: 'Register',
   },
   {
     path: 'staff-view-orders',
@@ -32,18 +30,10 @@ export const routes: Routes = [
     data: { role: 'employee' },
   },
   {
-    path: 'about',
-    component: AboutPage,
-    title: 'About', //done
-  },
-  {
-    path: 'contact',
-    component: ContactPage,
-    title: 'Contact', //done
-  },
-  {
-    path: 'profile',
-    component: Profile,
-    title: 'Profile', //done
+    path: 'admin-view-orders',
+    component: AdminViewOrders,
+    title: 'Admin View Orders',
+    canActivate: [roleGuard],
+    data: { role: 'admin' },
   },
 ];

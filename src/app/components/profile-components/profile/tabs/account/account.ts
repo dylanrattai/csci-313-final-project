@@ -1,8 +1,8 @@
 import { Component, inject, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth/authService';
-import { UserService } from '../../../../core/services/userService/user-service';
-import { AppUser } from '../../../../core/models/appUser';
+import { AuthService } from '../../../../../core/services/auth/authService';
+import { UserService } from '../../../../../core/services/userService/user-service';
+import { AppUser } from '../../../../../core/models/appUser';
 
 @Component({
   selector: 'app-account',

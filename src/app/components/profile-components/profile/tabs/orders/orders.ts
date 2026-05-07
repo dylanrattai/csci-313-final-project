@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { AuthService } from '../../../../core/services/auth/authService';
-import { OrderService } from '../../../../core/services/orderService/order-service';
-import { Order } from '../../../../core/models/order';
+import { AuthService } from '../../../../../core/services/auth/authService';
+import { OrderService } from '../../../../../core/services/orderService/order-service';
+import { Order } from '../../../../../core/models/order';
 
 @Component({
   selector: 'app-orders',

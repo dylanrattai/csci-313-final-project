@@ -1,8 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
-import { Order } from '../../core/models/order';
-import { OrderService } from '../../core/services/orderService/order-service';
-import { AppUser } from '../../core/models/appUser';
-import { CustomCakeItem } from '../../core/models/custom_cake_item';
+import { Order } from '../../../core/models/order';
+import { OrderService } from '../../../core/services/orderService/order-service';
+import { AppUser } from '../../../core/models/appUser';
+import { CustomCakeItem } from '../../../core/models/custom_cake_item';
 
 @Component({
   selector: 'app-staff-order-table',

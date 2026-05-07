@@ -1,8 +1,8 @@
 import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth/authService';
-import { PasswordHelper } from '../../../../core/services/passwordService/password-helper';
-import { AppUser } from '../../../../core/models/appUser';
+import { AuthService } from '../../../../../core/services/auth/authService';
+import { PasswordHelper } from '../../../../../core/services/passwordService/password-helper';
+import { AppUser } from '../../../../../core/models/appUser';
 
 @Component({
   selector: 'app-change-password',
@@ -43,7 +43,7 @@ export class ChangePassword {
     },
     {
       validators: [this.passwordHelper.passwordMatchValidator('newPassword', 'confirmNewPassword')],
-    },
+    }
   );
 
   submitted = false;

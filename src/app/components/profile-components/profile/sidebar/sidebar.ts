@@ -1,6 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
 import { ProfileTab } from '../profile/profile';
-import { AuthService } from '../../../core/services/auth/authService';
+import { AuthService } from '../../../../core/services/auth/authService';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
 import { AuthService } from './core/services/auth/authService';
+import { CartService } from './core/services/cartService/cart-service';
 import { browserLocalPersistence, setPersistence } from 'firebase/auth';
 import { auth } from './firebase.config';
 
@@ -14,6 +15,7 @@ export class App implements OnInit {
   protected readonly title = signal('TheBakeShop');
 
   readonly auth = inject(AuthService);
+  private readonly cartService = inject(CartService);
   private readonly router = inject(Router);
 
   async ngOnInit() {
@@ -21,6 +23,7 @@ export class App implements OnInit {
   }
 
   async logout() {
+    this.cartService.clearCart();
     await this.auth.logout();
     await this.router.navigate(['/login']);
   }

@@ -1,24 +1,37 @@
 import { Injectable, signal } from '@angular/core';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase.config';
+import { PremadeMenu } from '../../models/premade_menu';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PremadeMenuService {
+  readonly cakes = signal<PremadeMenu[]>([]);
 
-  readonly cakes = signal<any[]>([]);
+  async loadCakes(): Promise<PremadeMenu[]> {
+    const ref = collection(db, 'premade_menu');
+    const snapshot = await getDocs(ref);
 
-async loadCakes() {
-  const ref = collection(db, 'premade_menu');
-  const snapshot = await getDocs(ref);
+    const cakes: PremadeMenu[] = snapshot.docs.map((cakeDoc) => ({
+      premade_id: cakeDoc.id,
+      ...(cakeDoc.data() as Omit<PremadeMenu, 'premade_id'>),
+    }));
 
-  const cakes = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    this.cakes.set(cakes);
+    return cakes;
+  }
 
-  this.cakes.set(cakes);
-}
-  
+  async getCake(id: string): Promise<PremadeMenu | null> {
+    const snap = await getDoc(doc(db, 'premade_menu', id));
+
+    if (!snap.exists()) {
+      return null;
+    }
+
+    return {
+      premade_id: snap.id,
+      ...(snap.data() as Omit<PremadeMenu, 'premade_id'>),
+    };
+  }
 }

@@ -8,7 +8,15 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { RouterLinkWithHref, Router } from '@angular/router';
 import { CartService } from '../../core/services/cartService/cart-service';
 import { AddressService } from '../../core/services/addressService/address-service';
@@ -17,6 +25,7 @@ import { OrderService } from '../../core/services/orderService/order-service';
 import { ItemService } from '../../core/services/itemService/item-service';
 import { CustomCakeItem } from '../../core/models/custom_cake_item';
 import { PremadeMenu } from '../../core/models/premade_menu';
+import { PremadeMenuService } from '../../core/services/permadeService/premademenu-service';
 
 @Component({
   selector: 'app-checkout',
@@ -31,6 +40,7 @@ export class Checkout implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly orderService = inject(OrderService);
   private readonly itemService = inject(ItemService);
+  private readonly premadeMenuService = inject(PremadeMenuService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
@@ -42,7 +52,6 @@ export class Checkout implements OnInit {
   isSubmitting = signal(false);
   submitError = signal<string | null>(null);
   successMessage = signal<string | null>(null);
-  itemDetails = signal<Map<string, CustomCakeItem | PremadeMenu>>(new Map());
   formInvalid = signal(true);
 
   // Readonly signals from services
@@ -50,25 +59,27 @@ export class Checkout implements OnInit {
   addresses = this.addressService.addresses;
   currentUser = this.authService.currentUser;
 
+  // Signals for item catalogs (cached from services)
+  customCakes = this.itemService.items;
+  premadeCakes = this.premadeMenuService.cakes;
+
   // Computed values
   cartItems = computed(() => {
     const pendingOrder = this.cart();
     return pendingOrder?.order_items ?? [];
   });
 
+  /**
+   * Compute total as the sum of all item prices in the cart.
+   * This ensures the total is always accurate based on actual items.
+   */
   cartTotal = computed(() => {
-    return this.cart()?.price ?? 0;
+    return this.cartItems().reduce((sum, itemId) => {
+      return sum + this.getItemPrice(itemId);
+    }, 0);
   });
 
   constructor() {
-    // Load item details when cartItems changes
-    effect(() => {
-      const items = this.cartItems();
-      items.forEach((itemId) => {
-        this.loadItemDetail(itemId);
-      });
-    });
-
     // Keep required email populated when auth user arrives after form initialization.
     effect(() => {
       const email = this.currentUser()?.email ?? '';
@@ -82,21 +93,95 @@ export class Checkout implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.loadAddresses();
+    // Load item catalogs from services
+    void Promise.all([
+      this.loadAddresses(),
+      this.itemService.loadItems(),
+      this.premadeMenuService.loadCakes(),
+      this.cartService.loadCurrentCart(),
+    ]);
   }
 
-  private async loadItemDetail(itemId: string) {
-    try {
-      const item = await this.itemService.getItem(itemId);
-      if (item) {
-        const currentMap = this.itemDetails();
-        const newMap = new Map(currentMap);
-        newMap.set(itemId, item);
-        this.itemDetails.set(newMap);
-      }
-    } catch (error) {
-      console.error(`Failed to load item ${itemId}:`, error);
+  /**
+   * Retrieve an item from cached catalogs.
+   * Tries custom cakes first (by item_id), then premade cakes (by premade_id).
+   * Returns null if item not found in either catalog.
+   */
+  getItemFromCatalog(itemId: string): CustomCakeItem | PremadeMenu | null {
+    // Try custom cakes first
+    const customCake = this.customCakes().find((item) => item.item_id === itemId);
+    if (customCake) {
+      return customCake;
     }
+
+    // Try premade cakes
+    const premadeCake = this.premadeCakes().find((item) => item.premade_id === itemId);
+    if (premadeCake) {
+      return premadeCake;
+    }
+
+    return null;
+  }
+
+  /**
+   * Check if an item is a custom cake (has item_id property).
+   */
+  isCustomCakeItem(item: CustomCakeItem | PremadeMenu | null): item is CustomCakeItem {
+    return item ? 'item_id' in item : false;
+  }
+
+  /**
+   * Get the display name for a cart item.
+   * For custom cakes, returns the stored name from the custom cake record.
+   * For premade cakes, returns the name from the premade menu record.
+   */
+  getItemDisplayName(itemId: string): string {
+    const item = this.getItemFromCatalog(itemId);
+    if (item) {
+      return item.name;
+    }
+    // Fallback (should not happen if catalog is loaded)
+    return 'Item';
+  }
+
+  /**
+   * Get the price for a cart item.
+   * Retrieves price from the item record (custom or premade).
+   */
+  getItemPrice(itemId: string): number {
+    const item = this.getItemFromCatalog(itemId);
+    return item?.price ?? 0;
+  }
+
+  private expirationDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value || typeof value !== 'string') {
+        return null;
+      }
+
+      const match = /^([0-9]{2})\/([0-9]{2})$/.exec(value.trim());
+      if (!match) {
+        return null;
+      }
+
+      const month = Number(match[1]);
+      const year = Number(match[2]);
+
+      if (month < 1 || month > 12) {
+        return { expiredCard: true };
+      }
+
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear() % 100;
+
+      if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        return { expiredCard: true };
+      }
+
+      return null;
+    };
   }
 
   private initializeForm() {
@@ -107,7 +192,10 @@ export class Checkout implements OnInit {
       addressId: [''], // Will be conditionally required
       phone: ['', [Validators.pattern(/^\d{10}$|^$/)]],
       cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
-      cardExpiry: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
+      cardExpiry: [
+        '',
+        [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/), this.expirationDateValidator()],
+      ],
       cardCVC: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
       email: [userEmail, [Validators.required, Validators.email]],
     });
@@ -155,35 +243,55 @@ export class Checkout implements OnInit {
       const pendingOrder = this.cart();
       if (!pendingOrder) return;
 
-      const item = this.itemDetails().get(itemId);
-      const itemPrice = item?.price ?? 0;
+      // Ensure itemId is a string (Firestore data might have type issues)
+      const normalizedItemId = String(itemId);
 
-      // Remove item from order items array
-      const updatedItems = pendingOrder.order_items.filter((id) => id !== itemId);
-      const updatedPrice = Math.max(0, pendingOrder.price - itemPrice);
+      // Get the item price FIRST (before any catalog changes)
+      const itemPrice = this.getItemPrice(normalizedItemId);
 
-      // Update the order
+      // Hard delete: Remove custom cake document from Firestore
+      if (normalizedItemId.startsWith('custom_cake_')) {
+        try {
+          await this.itemService.deleteItem(normalizedItemId);
+        } catch (deleteError) {
+          console.error(`Failed to delete custom cake item ${normalizedItemId}:`, deleteError);
+          // Continue with order update even if item deletion fails
+        }
+      }
+
+      // Remove only the first matching item so duplicates remain in the cart
+      const updatedItems = [...pendingOrder.order_items];
+      const removalIndex = updatedItems.findIndex((id) => String(id) === normalizedItemId);
+
+      if (removalIndex === -1) {
+        throw new Error(`Item ${normalizedItemId} was not found in the cart.`);
+      }
+
+      updatedItems.splice(removalIndex, 1);
+
+      const currentPrice = Number(pendingOrder.price) || 0;
+      const updatedPrice = Math.max(0, currentPrice - itemPrice);
+
+      // Update the order in Firestore
       await this.orderService.updateOrder(pendingOrder.order_id, {
         order_items: updatedItems,
         price: updatedPrice,
       });
 
-      // Refresh cart with updated data
+      // Refresh cart with updated data from Firestore
       const refreshedOrder = await this.orderService.getOrder(pendingOrder.order_id);
       if (refreshedOrder) {
         this.cartService.updateCart(refreshedOrder);
       }
-
-      // Remove from item details cache
-      const newMap = new Map(this.itemDetails());
-      newMap.delete(itemId);
-      this.itemDetails.set(newMap);
     } catch (error) {
       console.error('Error deleting item from cart:', error);
       this.submitError.set('Failed to remove item from cart.');
     }
   }
 
+  /**
+   * Navigate to custom cake editor for the given custom cake item.
+   */
   editCustomCake(itemId: string): void {
     this.router.navigate(['/custom-cake'], {
       queryParams: { editItemId: itemId },
@@ -232,12 +340,6 @@ export class Checkout implements OnInit {
     } finally {
       this.isSubmitting.set(false);
     }
-  }
-
-  // Get item price by ID
-  getItemPrice(itemId: string): number {
-    const item = this.itemDetails().get(itemId);
-    return item?.price ?? 0;
   }
 
   // Check if cart is empty

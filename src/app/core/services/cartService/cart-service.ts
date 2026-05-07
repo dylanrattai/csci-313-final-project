@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, effect } from '@angular/core';
 import { Order } from '../../models/order';
 import { OrderService } from '../orderService/order-service';
 import { ItemService } from '../itemService/item-service';
@@ -18,6 +18,38 @@ export class CartService {
   private readonly _cart = signal<Order | null>(null);
   readonly cart = this._cart.asReadonly();
 
+  constructor() {
+    effect(() => {
+      void this.loadCurrentCart();
+    });
+  }
+
+  private async findPendingOrder(customerId: string): Promise<Order | null> {
+    const orders = await this.orderService.loadOrders();
+    return (
+      orders.find((order) => order.customer === customerId && order.status === 'pending') ?? null
+    );
+  }
+
+  async loadCurrentCart(): Promise<Order | null> {
+    const customerId = this.authService.currentUser()?.uid;
+
+    if (!customerId) {
+      this._cart.set(null);
+      return null;
+    }
+
+    try {
+      const pendingOrder = await this.findPendingOrder(customerId);
+      this._cart.set(pendingOrder);
+      return pendingOrder;
+    } catch (error) {
+      console.error('Error loading cart:', error);
+      this._cart.set(null);
+      return null;
+    }
+  }
+
   /**
    * Fetch or create a pending order for the current user.
    * Searches existing orders for a pending one; if not found, creates a new empty one.
@@ -25,11 +57,7 @@ export class CartService {
    */
   private async getOrCreatePendingOrder(customerId: string): Promise<Order | null> {
     try {
-      // Load all orders to find existing pending order for this customer
-      const orders = await this.orderService.loadOrders();
-      const existingPendingOrder = orders.find(
-        (o) => o.customer === customerId && o.status === 'pending',
-      );
+      const existingPendingOrder = await this.findPendingOrder(customerId);
 
       if (existingPendingOrder) {
         this._cart.set(existingPendingOrder);

@@ -1,239 +1,252 @@
 <section class="background">
   <div class="checkout-container">
-  <div class="checkout-content">
-    <!-- ================= LEFT: FORM ================= -->
-    <div class="checkout-form-section">
-      <h2 class="form-title">Order Details</h2>
+    <div class="checkout-content">
+      <!-- ================= LEFT: FORM ================= -->
+      <div class="checkout-form-section">
+        <h2 class="form-title">Order Details</h2>
 
-      <!-- Alerts -->
-      @if (submitError()) {
-        <div class="alert alert-danger" role="alert">
-          {{ submitError() }}
-        </div>
-      }
-
-      @if (successMessage()) {
-        <div class="alert alert-success" role="alert">
-          {{ successMessage() }}
-        </div>
-      }
-
-      <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" class="checkout-form">
-        <!-- ================= DELIVERY ================= -->
-        <div class="form-group">
-          <label class="form-label">Delivery Method</label>
-
-          <div class="delivery-options">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                id="pickup"
-                value="pickup"
-                formControlName="deliveryType"
-              />
-              <label class="form-check-label" for="pickup">Pickup</label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                id="delivery"
-                value="delivery"
-                formControlName="deliveryType"
-              />
-              <label class="form-check-label" for="delivery">Delivery</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Address (only for delivery) -->
-        @if (deliveryType() === 'delivery') {
-          <div class="form-group">
-            <label for="addressId" class="form-label">
-              Delivery Address <span class="required">*</span>
-            </label>
-
-            <select id="addressId" class="form-control" formControlName="addressId">
-              <option value="">-- Select or Add New Address --</option>
-
-              @for (address of addresses(); track address.id) {
-                <option [value]="address.id">
-                  {{ address.line1 }}, {{ address.city }}, {{ address.state }} {{ address.zip }}
-                </option>
-              }
-            </select>
-
-            <a routerLink="/profile" class="add-address-link"> Add New Address </a>
-
-            @if (checkoutForm.get('addressId')?.invalid && checkoutForm.get('addressId')?.touched) {
-              <div class="invalid-feedback d-block">Address is required for delivery</div>
-            }
+        <!-- Alerts -->
+        @if (submitError()) {
+          <div class="alert alert-danger" role="alert">
+            {{ submitError() }}
           </div>
         }
 
-        <!-- ================= CONTACT ================= -->
-        <div class="form-group">
-          <label for="email" class="form-label"> Email <span class="required">*</span> </label>
+        @if (successMessage()) {
+          <div class="alert alert-success" role="alert">
+            {{ successMessage() }}
+          </div>
+        }
 
-          <input
-            type="email"
-            id="email"
-            class="form-control"
-            formControlName="email"
-            placeholder="you@example.com"
-          />
-        </div>
+        <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" class="checkout-form">
+          <!-- ================= DELIVERY ================= -->
+          <div class="form-group">
+            <label class="form-label">Delivery Method</label>
 
-        <div class="form-group">
-          <label for="phone" class="form-label">Phone (Optional)</label>
+            <div class="delivery-options">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="pickup"
+                  value="pickup"
+                  formControlName="deliveryType"
+                />
+                <label class="form-check-label" for="pickup">Pickup</label>
+              </div>
 
-          <input
-            type="tel"
-            id="phone"
-            class="form-control"
-            formControlName="phone"
-            placeholder="1234567890"
-          />
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="delivery"
+                  value="delivery"
+                  formControlName="deliveryType"
+                />
+                <label class="form-check-label" for="delivery">Delivery</label>
+              </div>
+            </div>
+          </div>
 
-          @if (
-            checkoutForm.get('phone')?.invalid &&
-            checkoutForm.get('phone')?.touched &&
-            checkoutForm.get('phone')?.value
-          ) {
-            <div class="invalid-feedback d-block">Enter a valid 10-digit phone number</div>
+          <!-- Address (only for delivery) -->
+          @if (deliveryType() === 'delivery') {
+            <div class="form-group">
+              <label for="addressId" class="form-label">
+                Delivery Address <span class="required">*</span>
+              </label>
+
+              <select id="addressId" class="form-control" formControlName="addressId">
+                <option value="">-- Select or Add New Address --</option>
+
+                @for (address of addresses(); track address.id) {
+                  <option [value]="address.id">
+                    {{ address.line1 }}, {{ address.city }}, {{ address.state }} {{ address.zip }}
+                  </option>
+                }
+              </select>
+
+              <a routerLink="/profile" class="add-address-link"> Add New Address </a>
+
+              @if (
+                checkoutForm.get('addressId')?.invalid && checkoutForm.get('addressId')?.touched
+              ) {
+                <div class="invalid-feedback d-block">Address is required for delivery</div>
+              }
+            </div>
           }
-        </div>
 
-        <!-- ================= PAYMENT ================= -->
-        <h3 class="form-section-title">Payment Information</h3>
+          <!-- ================= CONTACT ================= -->
+          <div class="form-group">
+            <label for="email" class="form-label"> Email <span class="required">*</span> </label>
 
-        <div class="form-group">
-          <label for="cardNumber" class="form-label">
-            Card Number <span class="required">*</span>
-          </label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="you@example.com"
+            />
+          </div>
 
-          <input
-            type="text"
-            id="cardNumber"
-            class="form-control"
-            formControlName="cardNumber"
-            placeholder="1234567890123456"
-            maxlength="16"
-          />
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone (Optional)</label>
 
-          @if (checkoutForm.get('cardNumber')?.invalid && checkoutForm.get('cardNumber')?.touched) {
-            <div class="invalid-feedback d-block">Enter a valid 16-digit card number</div>
-          }
-        </div>
+            <input
+              type="tel"
+              id="phone"
+              class="form-control"
+              formControlName="phone"
+              placeholder="1234567890"
+            />
 
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="cardExpiry" class="form-label">
-              Exp. <span class="required">*</span>
+            @if (
+              checkoutForm.get('phone')?.invalid &&
+              checkoutForm.get('phone')?.touched &&
+              checkoutForm.get('phone')?.value
+            ) {
+              <div class="invalid-feedback d-block">Enter a valid 10-digit phone number</div>
+            }
+          </div>
+
+          <!-- ================= PAYMENT ================= -->
+          <h3 class="form-section-title">Payment Information</h3>
+
+          <div class="form-group">
+            <label for="cardNumber" class="form-label">
+              Card Number <span class="required">*</span>
             </label>
 
             <input
               type="text"
-              id="cardExpiry"
+              id="cardNumber"
               class="form-control"
-              formControlName="cardExpiry"
-              placeholder="MM/YY"
-              maxlength="5"
+              formControlName="cardNumber"
+              placeholder="1234567890123456"
+              maxlength="16"
             />
 
             @if (
-              checkoutForm.get('cardExpiry')?.invalid && checkoutForm.get('cardExpiry')?.touched
+              checkoutForm.get('cardNumber')?.invalid && checkoutForm.get('cardNumber')?.touched
             ) {
-              <div class="invalid-feedback d-block">Use MM/YY format</div>
+              <div class="invalid-feedback d-block">Enter a valid 16-digit card number</div>
             }
           </div>
 
-          <div class="form-group col">
-            <label for="cardCVC" class="form-label"> CVC <span class="required">*</span> </label>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="cardExpiry" class="form-label">
+                Exp. <span class="required">*</span>
+              </label>
 
-            <input
-              type="text"
-              id="cardCVC"
-              class="form-control"
-              formControlName="cardCVC"
-              placeholder="123"
-              maxlength="3"
-            />
+              <input
+                type="text"
+                id="cardExpiry"
+                class="form-control"
+                formControlName="cardExpiry"
+                placeholder="MM/YY"
+                maxlength="5"
+              />
 
-            @if (checkoutForm.get('cardCVC')?.invalid && checkoutForm.get('cardCVC')?.touched) {
-              <div class="invalid-feedback d-block">Enter a valid 3-digit CVC</div>
-            }
-          </div>
-        </div>
-      </form>
-    </div>
+              @if (
+                checkoutForm.get('cardExpiry')?.touched && checkoutForm.get('cardExpiry')?.errors
+              ) {
+                @if (checkoutForm.get('cardExpiry')?.errors?.['pattern']) {
+                  <div class="invalid-feedback d-block">Use MM/YY format</div>
+                }
 
-    <!-- ================= RIGHT: SUMMARY ================= -->
-    <div class="order-summary-section">
-      <h2 class="summary-title">Order Summary</h2>
-
-      @if (isCartEmpty()) {
-        <div class="empty-cart">
-          <p>Your cart is empty</p>
-          <a routerLink="/custom-cake" class="btn btn-primary"> Continue Shopping </a>
-        </div>
-      } @else {
-        <div class="order-items">
-          @for (itemId of cartItems(); track itemId) {
-            <div class="order-item">
-              <div class="item-details">
-                <p class="item-name">Custom Cake</p>
-
-                <div class="item-actions">
-                  <button
-                    type="button"
-                    class="btn-action btn-edit"
-                    (click)="editCustomCake(itemId)"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    type="button"
-                    class="btn-action btn-delete"
-                    (click)="deleteFromCart(itemId)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-
-              <p class="item-price">
-                {{ getItemPrice(itemId) | currency: 'USD' : 'symbol' : '1.2-2' }}
-              </p>
+                @if (checkoutForm.get('cardExpiry')?.errors?.['expiredCard']) {
+                  <div class="invalid-feedback d-block">Card expiration must be in the future</div>
+                }
+              }
             </div>
-          }
-        </div>
 
-        <div class="order-total">
-          <h4>Total</h4>
-          <p class="total-price">
-            {{ cartTotal() | currency: 'USD' : 'symbol' : '1.2-2' }}
-          </p>
-        </div>
+            <div class="form-group col">
+              <label for="cardCVC" class="form-label"> CVC <span class="required">*</span> </label>
 
-        <button
-          type="button"
-          class="btn btn-primary btn-lg w-100 place-order-btn"
-          [disabled]="formInvalid() || isSubmitting()"
-          (click)="placeOrder()"
-        >
-          @if (isSubmitting()) {
-            Processing...
-          } @else {
-            Place Order
-          }
-        </button>
-      }
+              <input
+                type="text"
+                id="cardCVC"
+                class="form-control"
+                formControlName="cardCVC"
+                placeholder="123"
+                maxlength="3"
+              />
+
+              @if (checkoutForm.get('cardCVC')?.invalid && checkoutForm.get('cardCVC')?.touched) {
+                <div class="invalid-feedback d-block">Enter a valid 3-digit CVC</div>
+              }
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- ================= RIGHT: SUMMARY ================= -->
+      <div class="order-summary-section">
+        <h2 class="summary-title">Order Summary</h2>
+
+        @if (isCartEmpty()) {
+          <div class="empty-cart">
+            <p>Your cart is empty</p>
+            <a routerLink="/custom-cake" class="btn btn-primary"> Continue Shopping </a>
+          </div>
+        } @else {
+          <div class="order-items">
+            @for (itemId of cartItems(); let idx = $index; track idx) {
+              <div class="order-item">
+                <div class="item-details">
+                  <p class="item-name">{{ getItemDisplayName(itemId) }}</p>
+
+                  <div class="item-actions">
+                    <!-- Edit button: only for custom cakes -->
+                    @if (isCustomCakeItem(getItemFromCatalog(itemId))) {
+                      <button
+                        type="button"
+                        class="btn-action btn-edit"
+                        (click)="editCustomCake(itemId)"
+                      >
+                        Edit
+                      </button>
+                    }
+
+                    <!-- Delete button: all items can be deleted -->
+                    <button
+                      type="button"
+                      class="btn-action btn-delete"
+                      (click)="deleteFromCart(itemId)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+
+                <p class="item-price">
+                  {{ getItemPrice(itemId) | currency: 'USD' : 'symbol' : '1.2-2' }}
+                </p>
+              </div>
+            }
+          </div>
+
+          <div class="order-total">
+            <h4>Total</h4>
+            <p class="total-price">
+              {{ cartTotal() | currency: 'USD' : 'symbol' : '1.2-2' }}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary btn-lg w-100 place-order-btn"
+            [disabled]="formInvalid() || isSubmitting()"
+            (click)="placeOrder()"
+          >
+            @if (isSubmitting()) {
+              Processing...
+            } @else {
+              Place Order
+            }
+          </button>
+        }
+      </div>
     </div>
   </div>
-</div>
-
 </section>

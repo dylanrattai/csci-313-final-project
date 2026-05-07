@@ -19,6 +19,18 @@
 
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          @if(auth.isAdmin()) {
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/admin-view-orders">Manage Orders</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/admin-manage">Admin Menu</a>
+          </li>
+          } @if(auth.isEmployee()) {
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/staff-view-orders">View Orders</a>
+          </li>
+          }
           <li class="nav-item mx-1">
             <a class="nav-link active" routerLink="">Menu</a>
           </li>
@@ -29,17 +41,16 @@
             <a class="nav-link active" routerLink="contact">Contact</a>
           </li>
           @if (auth.isLoggedIn()) {
-            <li class="nav-item mx-1">
-              <a class="nav-link active" routerLink="/profile">Profile</a>
-            </li>
-
-            <li class="nav-item mx-1">
-              <a class="nav-link active" (click)="logout()">Logout</a>
-            </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/profile">Profile</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" (click)="logout()">Logout</a>
+          </li>
           } @else {
-            <li class="nav-item mx-1">
-              <a class="nav-link active" routerLink="/login">Login</a>
-            </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link active" routerLink="/login">Login</a>
+          </li>
           }
           <li class="nav-item">
             <a class="btn rounded-pill ms-lg-3 custom-red" routerLink="">Place an Order</a>
@@ -55,7 +66,7 @@
   </main>
 
   <!-- Footer -->
-  <footer style="background-color: rgba(222, 220, 210, 0.599);" class="text-dark py-4 border-top">
+  <footer style="background-color: rgba(222, 220, 210, 0.599)" class="text-dark py-4 border-top">
     <div class="container">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <!-- Left Side -->
@@ -79,7 +90,7 @@
 
         <!-- Right Side -->
         <div>
-          <small class="text-muted">Subscribe to our Newsletter <br></small>
+          <small class="text-muted">Subscribe to our Newsletter <br /></small>
           <label for="email"></label>
           <input type="text" id="email" name="email" placeholder="email@email.com" />
         </div>

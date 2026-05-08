@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AdminManageAcounts } from '../admin-manage-acounts/admin-manage-acounts';
 import { AdminManageProducts } from '../admin-manage-products/admin-manage-products';
 import { AdminManageSelector } from '../admin-manage-selector/admin-manage-selector';
@@ -17,9 +17,9 @@ import { AdminManagePremade } from '../admin-manage-premade/admin-manage-premade
   styleUrl: './admin-manage.css',
 })
 export class AdminManage {
-  private userService = new UserService();
-  private itemService = new ItemService();
-  private premadeCakeService = new PremadeCakeService();
+  private readonly userService = inject(UserService);
+  private readonly itemService = inject(ItemService);
+  private readonly premadeCakeService = inject(PremadeCakeService);
   users = this.userService.users;
   usersMap = new Map<string, AppUser>();
   items = this.itemService.items;

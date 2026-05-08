@@ -4,5 +4,6 @@ export interface Order {
   order_id: string;
   order_items: string[]; // array of order item ids
   price: number;
+  pickup_date?: string;
   status: 'needs approval' | 'pending' | 'in_progress' | 'completed' | 'received' | 'cancelled';
 }

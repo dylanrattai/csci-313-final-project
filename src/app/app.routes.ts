@@ -12,6 +12,7 @@ import { Checkout } from './components/checkout/checkout';
 import { PremadeMenu } from './components/premade-menu/premade-menu';
 import { AdminViewOrders } from './components/admin-components/admin-view-orders/admin-view-orders';
 import { AdminManage } from './components/admin-components/admin-manage/admin-manage';
+import { authGuard } from './core/guards/auth-guard/auth-guard';
 
 export const routes: Routes = [
   {
@@ -32,12 +33,14 @@ export const routes: Routes = [
   {
     path: 'menu',
     component: PremadeMenu,
-    title: 'Menu'
+    title: 'Menu',
+    canActivate: [authGuard]
   },
   {
     path: 'profile',
     component: Profile,
-    title: 'Profile'
+    title: 'Profile',
+    canActivate: [authGuard]
   },
   {
     path: 'login',
@@ -74,10 +77,12 @@ export const routes: Routes = [
     path: 'custom-cake',
     component: CustomizationPage,
     title: 'Customize Your Cake',
+    canActivate: [authGuard],
   },
   {
     path: 'checkout',
     component: Checkout,
     title: 'Checkout',
+    canActivate: [authGuard],
   },
 ];

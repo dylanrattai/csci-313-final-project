@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Input, input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { PremadeMenu } from '../../../core/models/premade_menu';
 import { PremadeCakeService } from '../../../core/services/premade-cake-service/premade-cake-service';
 
@@ -101,11 +101,19 @@ export class AdminManagePremade {
     this.newDescription = input;
   }
 
-  confirmChanges() {
-    if (this.savedName !== this.newName) this.setName(this.newName);
-    if (this.savedPrice !== this.newPrice) this.setPrice(this.newPrice);
-    if (this.savedImgPath !== this.newImgPath) this.setImgPath(this.newImgPath);
-    if (this.savedDisplayOnMenu !== this.newDisplayOnMenu) this.setDisplay(this.newDisplayOnMenu);
-    if (this.savedDescription !== this.newDescription) this.setDescription(this.newDescription);
+  async confirmChanges() {
+    try {
+      if (this.savedName !== this.newName) await this.setName(this.newName);
+      if (this.savedPrice !== this.newPrice) await this.setPrice(this.newPrice);
+      if (this.savedImgPath !== this.newImgPath) await this.setImgPath(this.newImgPath);
+      if (this.savedDisplayOnMenu !== this.newDisplayOnMenu) {
+        await this.setDisplay(this.newDisplayOnMenu);
+      }
+      if (this.savedDescription !== this.newDescription) {
+        await this.setDescription(this.newDescription);
+      }
+    } catch (error) {
+      console.error('Failed to save premade cake changes:', error);
+    }
   }
 }

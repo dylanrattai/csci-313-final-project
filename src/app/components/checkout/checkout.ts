@@ -24,6 +24,7 @@ import { AuthService } from '../../core/services/auth/authService';
 import { OrderService } from '../../core/services/orderService/order-service';
 import { ItemService } from '../../core/services/itemService/item-service';
 import { CustomCakeItem } from '../../core/models/custom_cake_item';
+import { Order } from '../../core/models/order';
 import { PremadeMenu } from '../../core/models/premade_menu';
 import { PremadeMenuService } from '../../core/services/permadeService/premademenu-service';
 
@@ -53,6 +54,7 @@ export class Checkout implements OnInit {
   submitError = signal<string | null>(null);
   successMessage = signal<string | null>(null);
   formInvalid = signal(true);
+  readonly pickupDateMin = this.getLocalDateInputValue(new Date());
 
   // Readonly signals from services
   cart = this.cartService.cart;
@@ -184,12 +186,62 @@ export class Checkout implements OnInit {
     };
   }
 
+  private pickupDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value || typeof value !== 'string') {
+        return null;
+      }
+
+      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim());
+      if (!match) {
+        return { invalidPickupDate: true };
+      }
+
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      const day = Number(match[3]);
+      const selectedDate = new Date(year, month - 1, day);
+
+      if (
+        selectedDate.getFullYear() !== year ||
+        selectedDate.getMonth() !== month - 1 ||
+        selectedDate.getDate() !== day
+      ) {
+        return { invalidPickupDate: true };
+      }
+
+      const today = new Date();
+      const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+      if (selectedDate < startOfToday) {
+        return { pastPickupDate: true };
+      }
+
+      const dayOfWeek = selectedDate.getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        return { weekendPickupDate: true };
+      }
+
+      return null;
+    };
+  }
+
+  private getLocalDateInputValue(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
   private initializeForm() {
     const userEmail = this.currentUser()?.email || '';
 
     this.checkoutForm = this.fb.group({
       deliveryType: ['delivery', Validators.required],
       addressId: [''], // Will be conditionally required
+      pickupDate: [''],
       phone: ['', [Validators.pattern(/^\d{10}$|^$/)]],
       cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
       cardExpiry: [
@@ -200,10 +252,11 @@ export class Checkout implements OnInit {
       email: [userEmail, [Validators.required, Validators.email]],
     });
 
-    // Update delivery type signal and conditionally set addressId validation
+    // Update delivery type signal and conditionally set addressId / pickup date validation
     this.checkoutForm.get('deliveryType')?.valueChanges.subscribe((val) => {
-      this.deliveryType.set(val);
-      this.updateAddressValidation(val === 'delivery');
+      const deliveryMethod = val === 'pickup' ? 'pickup' : 'delivery';
+      this.deliveryType.set(deliveryMethod);
+      this.updateDeliveryMethodValidation(deliveryMethod);
     });
 
     // Track form validity via a signal so template updates with OnPush CD
@@ -214,20 +267,27 @@ export class Checkout implements OnInit {
     // initialize form invalid state
     this.formInvalid.set(this.checkoutForm.invalid);
     // Apply validator state for the initial selected delivery method.
-    this.updateAddressValidation(this.checkoutForm.get('deliveryType')?.value === 'delivery');
+    const initialDeliveryType =
+      this.checkoutForm.get('deliveryType')?.value === 'pickup' ? 'pickup' : 'delivery';
+    this.updateDeliveryMethodValidation(initialDeliveryType);
   }
 
-  private updateAddressValidation(isDelivery: boolean): void {
+  private updateDeliveryMethodValidation(deliveryType: 'pickup' | 'delivery'): void {
     const addressControl = this.checkoutForm.get('addressId');
+    const pickupDateControl = this.checkoutForm.get('pickupDate');
     if (!addressControl) return;
+    if (!pickupDateControl) return;
 
-    if (isDelivery) {
+    if (deliveryType === 'delivery') {
       addressControl.setValidators([Validators.required]);
+      pickupDateControl.clearValidators();
     } else {
       addressControl.clearValidators();
+      pickupDateControl.setValidators([Validators.required, this.pickupDateValidator()]);
     }
 
     addressControl.updateValueAndValidity();
+    pickupDateControl.updateValueAndValidity();
   }
 
   private async loadAddresses() {
@@ -314,15 +374,16 @@ export class Checkout implements OnInit {
       }
 
       const formValues = this.checkoutForm.value;
+      const orderUpdate: Partial<Omit<Order, 'order_id'>> = {
+        status: 'needs approval',
+      };
+
+      if (formValues.deliveryType === 'pickup' && formValues.pickupDate) {
+        orderUpdate.pickup_date = formValues.pickupDate;
+      }
 
       // Update order status to 'needs approval' (from pending)
-      await this.orderService.updateOrder(pendingOrder.order_id, {
-        status: 'needs approval',
-        // Optionally store delivery info (this depends on your Order model expansion)
-        // deliveryType: formValues.deliveryType,
-        // address: selectedAddress,
-        // phone: formValues.phone,
-      });
+      await this.orderService.updateOrder(pendingOrder.order_id, orderUpdate);
 
       // Clear cart
       this.cartService.clearCart();

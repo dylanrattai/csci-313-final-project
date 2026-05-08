@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { PremadeMenuService } from '../../core/services/permadeService/premademenu-service';
 import { CartService } from '../../core/services/cartService/cart-service';
 import { PremadeMenu as PremadeMenuItem } from '../../core/models/premade_menu';
+
 @Component({
   selector: 'app-premade-menu',
   standalone: true,

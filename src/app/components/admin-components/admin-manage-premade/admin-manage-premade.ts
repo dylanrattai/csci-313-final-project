@@ -12,6 +12,9 @@ export class AdminManagePremade {
   @Input() product!: PremadeMenu;
   private cdr = inject(ChangeDetectorRef);
   private premadeCakeService = inject(PremadeCakeService);
+  isSaving = false;
+  saveMessage = '';
+  saveError = '';
   savedName = '';
   savedPrice = 0;
   savedDisplayOnMenu = false;
@@ -102,18 +105,53 @@ export class AdminManagePremade {
   }
 
   async confirmChanges() {
+    this.isSaving = true;
+    this.saveMessage = '';
+    this.saveError = '';
+
     try {
-      if (this.savedName !== this.newName) await this.setName(this.newName);
-      if (this.savedPrice !== this.newPrice) await this.setPrice(this.newPrice);
-      if (this.savedImgPath !== this.newImgPath) await this.setImgPath(this.newImgPath);
+      if (!this.product.premade_id) {
+        throw new Error('Missing premade cake id.');
+      }
+
+      const updateData: Partial<Omit<PremadeMenu, 'premade_id'>> = {};
+
+      if (this.savedName !== this.newName) updateData.name = this.newName;
+      if (this.savedPrice !== this.newPrice) updateData.price = this.newPrice;
+      if (this.savedImgPath !== this.newImgPath) updateData.img_path = this.newImgPath;
       if (this.savedDisplayOnMenu !== this.newDisplayOnMenu) {
-        await this.setDisplay(this.newDisplayOnMenu);
+        updateData.display_on_menu = this.newDisplayOnMenu;
       }
       if (this.savedDescription !== this.newDescription) {
-        await this.setDescription(this.newDescription);
+        updateData.description = this.newDescription;
       }
+
+      if (Object.keys(updateData).length === 0) {
+        this.saveMessage = 'No changes to save.';
+        return;
+      }
+
+      await this.premadeCakeService.updatePremadeCake(this.product.premade_id, updateData);
+
+      this.savedName = this.newName;
+      this.savedPrice = this.newPrice;
+      this.savedImgPath = this.newImgPath;
+      this.savedDisplayOnMenu = this.newDisplayOnMenu;
+      this.savedDescription = this.newDescription;
+
+      this.product.name = this.newName;
+      this.product.price = this.newPrice;
+      this.product.img_path = this.newImgPath;
+      this.product.display_on_menu = this.newDisplayOnMenu;
+      this.product.description = this.newDescription;
+
+      this.saveMessage = 'Changes saved.';
     } catch (error) {
       console.error('Failed to save premade cake changes:', error);
+      this.saveError = 'Failed to save changes. Please try again.';
     }
+
+    this.isSaving = false;
+    this.cdr.detectChanges();
   }
 }

@@ -1,3 +1,56 @@
+/* =========================
+   HEADER WRAPPER
+========================= */
+
 .heading {
-  padding-top: 100px;
+  padding-top: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   TAB BUTTON CONTAINER
+========================= */
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+
+  background: #f3f4f6;
+  padding: 6px;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================
+   TAB BUTTONS
+========================= */
+
+.nav-buttons button {
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+  color: #3b82f6;
+
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+
+  transition: 0.2s ease;
+}
+
+/* hover */
+.nav-buttons button:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* selected tab */
+.nav-buttons button.selected {
+  background: #3b82f6;
+  color: white;
 }

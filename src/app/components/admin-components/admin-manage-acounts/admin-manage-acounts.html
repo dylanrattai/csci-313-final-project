@@ -1,10 +1,17 @@
-<h3>{{ user.firstName }} {{ user.lastName }}</h3>
-<table>
-  <tr>
-    <td>Set Permissions</td>
-  </tr>
-  <tr>
-    <td>
+<div class="user-card card-base">
+
+  <h3 class="user-title">
+    {{ user.firstName }} {{ user.lastName }}
+  </h3>
+
+  <div class="user-body">
+
+    <div class="permission-label">
+      Set Permissions
+    </div>
+
+    <div class="button-stack">
+
       <button
         type="button"
         (click)="setCustomer()"
@@ -12,10 +19,7 @@
       >
         Customer
       </button>
-    </td>
-  </tr>
-  <tr>
-    <td>
+
       <button
         type="button"
         (click)="setEmployee()"
@@ -23,24 +27,26 @@
       >
         Employee
       </button>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <button type="button" (click)="setAdmin()" [class.active]="newSelectedPermission === 'admin'">
-        Admin
-      </button>
-    </td>
-  </tr>
-  <tr>
-    <td>
+
       <button
         type="button"
-        (click)="confirmPermissionChange()"
-        [class.warn]="savedPermission !== newSelectedPermission"
+        (click)="setAdmin()"
+        [class.active]="newSelectedPermission === 'admin'"
       >
-        Confirm Changes
+        Admin
       </button>
-    </td>
-  </tr>
-</table>
+
+    </div>
+
+    <button
+      type="button"
+      class="confirm-btn"
+      (click)="confirmPermissionChange()"
+      [class.warn]="savedPermission !== newSelectedPermission"
+    >
+      Confirm Changes
+    </button>
+
+  </div>
+
+</div>

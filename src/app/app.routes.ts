@@ -6,7 +6,7 @@ import { StaffViewOrders } from './components/employee-components/staff-view-ord
 import { roleGuard } from './core/guards/role-guard/role-guard';
 import { AboutPage } from './components/about-page/about-page';
 import { ContactPage } from './components/contact-page/contact-page';
-import { Profile } from './components/profile/profile/profile';
+import { Profile } from './components/profile-components/profile/profile/profile';
 import { CustomizationPage } from './components/cake-customization/customization-page/customization-page';
 import { Checkout } from './components/checkout/checkout';
 import { PremadeMenu } from './components/premade-menu/premade-menu';
@@ -20,9 +20,24 @@ export const routes: Routes = [
     title: 'Home',
   },
   {
+    path: 'about',
+    component: AboutPage,
+    title: 'About' 
+  },
+    {
+    path: 'contact',
+    component: ContactPage,
+    title: 'Contact' 
+  },
+  {
     path: 'menu',
     component: PremadeMenu,
     title: 'Menu'
+  },
+  {
+    path: 'profile',
+    component: Profile,
+    title: 'Profile'
   },
   {
     path: 'login',

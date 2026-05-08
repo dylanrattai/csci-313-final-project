@@ -1,28 +1,62 @@
-.users-container {
+/* =========================
+   PAGE TITLE
+========================= */
+
+h1 {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+/* =========================
+   TAB SELECTOR WRAPPER
+========================= */
+
+.heading {
   display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  height: 100vh;
-  width: 100vw;
-  align-content: flex-start;
+  justify-content: center;
+  padding-top: 20px;
+  margin-bottom: 20px;
 }
-.account-tile {
-  border-width: 1px;
-  border-color: black;
-  border-style: solid;
-  padding: 10px;
-}
+
+/* =========================
+   MAIN CONTAINERS (FIXED)
+========================= */
+
+.users-container,
 .products-container {
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  height: 100vh;
-  width: 100vw;
-  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+
+  
+  height: 80vh;      
+  overflow-y: auto; 
 }
+
+/* =========================
+   TILE WRAPPERS (REMOVE OLD BORDER LOOK)
+========================= */
+
+.account-tile,
 .item-tile {
-  border-width: 1px;
-  border-color: black;
-  border-style: solid;
-  padding: 10px;
+  padding: 0;
+  border: none;
+}
+
+/* =========================
+   OPTIONAL: MAKE PAGE SCROLL NICER
+========================= */
+
+body {
+  margin: 0;
+  background: #f7f7f7;
+  font-family: Arial, sans-serif;
 }

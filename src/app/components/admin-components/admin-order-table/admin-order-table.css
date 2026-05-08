@@ -1,12 +1,114 @@
+/* =========================
+   TABLE BASE (matches your system)
+========================= */
+
+.order-table {
+  width: 95%;
+  margin: 0 auto; /* centers it horizontally */
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  background-color: rgb(255, 253, 251);
+  table-layout: fixed;
+}
+
+.order-table th,
+.order-table td {
+  border: 1px solid #868080;
+  padding: 10px;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+.order-table thead {
+  background: #b5b0ab;
+}
+
+/* =========================
+   STATUS BUTTONS (UNIFIED STYLE)
+========================= */
+
+.status-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status-buttons button {
+  flex: 1 1 120px;
+  min-width: 120px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid transparent;
+  border-radius: 4px;
+
+  cursor: pointer;
+  background: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.status-buttons button:hover {
+  filter: brightness(0.95);
+}
+
+/* ACTIVE STATES */
+
+.status-buttons button.unapproved.active {
+  background: red;
+  color: white;
+  border-color: red;
+}
+
+.status-buttons button.cancelled.active {
+  background: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+.status-buttons button.approved.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.status-buttons button.progress.active {
+  background: #ffc107;
+  color: white;
+  border-color: #ffc107;
+}
+
+.status-buttons button.completed.active {
+  background: green;
+  color: white;
+  border-color: green;
+}
+
+.status-buttons button.received.active {
+  background: grey;
+  color: white;
+  border-color: grey;
+}
+
+/* =========================
+   ITEMS GRID (kept consistent)
+========================= */
+
 .order-items {
-  max-height: 200px; /* controls scroll height */
+  max-height: 200px;
   overflow-y: auto;
   padding: 6px;
 }
 
 .order-items-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 wide */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
 }
 
@@ -15,20 +117,10 @@
   padding: 6px;
   font-size: 12px;
   text-align: center;
-  background: #f9f9f9;
+
+  background: #3b82f6;
+  color: white;
+
   border-radius: 4px;
   word-break: break-word;
-}
-button {
-  margin-right: 6px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-}
-
-button.active {
-  background: #007bff; /* blue highlight */
-  color: white;
-  border-color: #007bff;
 }

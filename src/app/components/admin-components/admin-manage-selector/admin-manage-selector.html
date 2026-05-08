@@ -1,25 +1,21 @@
 <section class="heading">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <div class="list-group">
-        <button
-          type="button"
-          class="list-group-item list-group-item-action"
-          [class.active]="activeTab() === 'accounts'"
-          (click)="selectTab('accounts')"
-        >
-          Manage Users
-        </button>
+  <div class="nav-buttons">
 
-        <button
-          type="button"
-          class="list-group-item list-group-item-action"
-          [class.active]="activeTab() === 'products'"
-          (click)="selectTab('products')"
-        >
-          Manage Products
-        </button>
-      </div>
-    </div>
+    <button
+      type="button"
+      (click)="selectTab('accounts')"
+      [class.selected]="activeTab() === 'accounts'"
+    >
+      Manage Users
+    </button>
+
+    <button
+      type="button"
+      (click)="selectTab('products')"
+      [class.selected]="activeTab() === 'products'"
+    >
+      Manage Products
+    </button>
+
   </div>
 </section>

@@ -1,18 +1,155 @@
-button {
-  margin-right: 6px;
+/* =========================
+   USERS GRID CONTAINER
+========================= */
+
+.users-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   CARD WRAPPER SIZING
+========================= */
+
+.account-tile {
+  width: 360px;
+  height: 240px;
+
+  display: flex;
+}
+
+/* =========================
+   BASE CARD STYLE (shared concept)
+========================= */
+
+.card-base {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e6e6e6;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+  overflow: hidden;
+}
+
+/* =========================
+   USER CARD LAYOUT
+========================= */
+
+.user-card {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.user-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* =========================
+   BODY LAYOUT
+========================= */
+
+.user-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding-top: 10px;
+}
+
+/* =========================
+   LABEL TEXT
+========================= */
+
+.permission-label {
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+}
+
+/* =========================
+   BUTTON GROUP STACK
+========================= */
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* =========================
+   BUTTON BASE (SCOPED ONLY)
+========================= */
+
+.user-card button {
   padding: 6px 10px;
   border: 1px solid #ccc;
   background: white;
   cursor: pointer;
+
+  font-family: Arial, sans-serif;
+  border-radius: 6px;
+
+  transition: 0.2s ease;
+
+  outline: none;
 }
 
-button.active {
-  background: #007bff; /* blue highlight */
+.user-card button:hover {
+  filter: brightness(0.95);
+}
+
+/* prevents click flash */
+.user-card button:active {
+  background: #f2f2f2;
+}
+
+.user-card button:focus {
+  outline: none;
+}
+
+/* =========================
+   STATES (IMPORTANT: SCOPED)
+========================= */
+
+.user-card button.active {
+  background: #007bff;
   color: white;
   border-color: #007bff;
 }
-button.warn {
-  background: #ff0000; /* red highlight */
+
+.user-card button.warn {
+  background: #ff0000;
   color: white;
   border-color: #ff0000;
+}
+
+/* =========================
+   CONFIRM BUTTON POSITION
+========================= */
+
+.confirm-btn {
+  margin-top: auto;
 }

@@ -6,7 +6,7 @@
     <title>View Orders</title>
   </head>
   <body>
-    <h1>Orders</h1>
+    <h1 class="font title">ORDERS</h1>
     <div class="scrollable">
       @for (order of orders(); track order.order_id) {
       <app-admin-order-table [order]="order" [usersMap]="usersMap" [itemsMap]="itemsMap">

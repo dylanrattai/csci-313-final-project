@@ -14,8 +14,8 @@ export class PremadeCakeService {
   async loadPremadeCakes(): Promise<PremadeMenu[]> {
     const snapshot = await getDocs(this.premadeCollection);
     const cakes: PremadeMenu[] = snapshot.docs.map((d) => ({
-      premade_id: d.id,
       ...(d.data() as Omit<PremadeMenu, 'premade_id'>),
+      premade_id: d.id,
     }));
     this._premadeCakes.set(cakes);
     return cakes;
@@ -25,8 +25,8 @@ export class PremadeCakeService {
     const snap = await getDoc(doc(db, 'premade_menu', id));
     if (!snap.exists()) return null;
     return {
-      premade_id: snap.id,
       ...(snap.data() as Omit<PremadeMenu, 'premade_id'>),
+      premade_id: snap.id,
     };
   }
 
@@ -39,7 +39,7 @@ export class PremadeCakeService {
     id: string,
     data: Partial<Omit<PremadeMenu, 'premade_id'>>
   ): Promise<void> {
-    await updateDoc(doc(db, 'premade_menu', id), data);
+    await setDoc(doc(db, 'premade_menu', id), data, { merge: true });
     await this.loadPremadeCakes();
   }
 

@@ -1,24 +1,139 @@
+/* =========================
+   PAGE TITLE
+========================= */
+
+h3 {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================
+   CONTAINERS
+========================= */
+
+.users-container,
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   TILES
+========================= */
+
+.account-tile,
+.item-tile {
+  width: 360px;
+  height: 420px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 10px;
+  box-sizing: border-box;
+
+  border-radius: 16px;
+  transition: transform 0.15s ease;
+}
+
+.account-tile:hover,
+.item-tile:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   PRODUCT / CARD STYLE
+========================= */
+
+.product-tile {
+  width: 100%;
+  height: 100%;
+
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/* =========================
+   TABLE AREA
+========================= */
+
+.edit-table {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 320px;
+}
+
+.edit-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.edit-table td {
+  padding: 6px;
+  vertical-align: middle;
+}
+
+/* =========================
+   BUTTONS (BLUE THEME)
+========================= */
+
 button {
   margin-right: 6px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
+  padding: 6px 12px;
+
+  border-radius: 8px;
+  border: 1px solid #3b82f6;
+
   background: white;
+  color: #3b82f6;
+
   cursor: pointer;
+  font-family: Arial, sans-serif;
+
+  transition: 0.2s ease;
 }
 
-button.active {
-  background: #007bff; /* blue highlight */
-  color: white;
-  border-color: #007bff;
-}
-button.warn {
-  background: #ff0000; /* red highlight */
-  color: white;
-  border-color: #ff0000;
+button:hover {
+  background: #eff6ff;
 }
 
+/* selected state */
 button.selected {
-  background: darkslategray; /* gray highlight */
+  background: #3b82f6;
   color: white;
-  border-color: darkslategray;
+}
+
+/* optional danger button */
+button.warn {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
 }

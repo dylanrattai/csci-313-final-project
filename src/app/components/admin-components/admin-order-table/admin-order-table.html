@@ -1,57 +1,94 @@
-<table border="1">
-  <tr>
-    <th>{{ order.order_id }}</th>
-    <th>
-      {{ usersMap.get(order.customer)?.firstName }} {{ usersMap.get(order.customer)?.lastName }}
-    </th>
-    <th></th>
-  </tr>
+<table class="order-table">
+  <thead>
+    <tr>
+      <th style="width: 20%;">{{ order.order_id }}</th>
+      <th style="width: 15%;">
+        {{ usersMap.get(order.customer)?.firstName }}
+        {{ usersMap.get(order.customer)?.lastName }}
+      </th>
+      <th style="width: 30%;">Actions</th>
+      <th style="width: 20%;">Items</th>
+    </tr>
+  </thead>
 
-  <tr>
-    <td>
-      <button
-        type="button"
-        (click)="setUnapproved()"
-        [class.active]="order.status === 'needs approval'"
-      >
-        NEEDS APPROVAL
-      </button>
+  <tbody>
+    <tr>
+      <td>{{ order.order_id }}</td>
 
-      <button type="button" (click)="setCancelled()" [class.active]="order.status === 'cancelled'">
-        CANCELLED
-      </button>
+      <td>
+        {{ usersMap.get(order.customer)?.firstName }}
+        {{ usersMap.get(order.customer)?.lastName }}
+      </td>
 
-      <button type="button" (click)="setApproved()" [class.active]="order.status === 'pending'">
-        APPROVED
-      </button>
+      <!-- STATUS ACTIONS -->
+      <td class="status-buttons">
+        <button
+          type="button"
+          class="unapproved"
+          (click)="setUnapproved()"
+          [class.active]="order.status === 'needs approval'"
+        >
+          NEEDS APPROVAL
+        </button>
 
-      <button
-        type="button"
-        (click)="setInProgress()"
-        [class.active]="order.status === 'in_progress'"
-      >
-        IN PROGRESS
-      </button>
+        <button
+          type="button"
+          class="cancelled"
+          (click)="setCancelled()"
+          [class.active]="order.status === 'cancelled'"
+        >
+          CANCELLED
+        </button>
 
-      <button type="button" (click)="setFinished()" [class.active]="order.status === 'completed'">
-        FINISHED
-      </button>
+        <button
+          type="button"
+          class="approved"
+          (click)="setApproved()"
+          [class.active]="order.status === 'pending'"
+        >
+          APPROVED
+        </button>
 
-      <button type="button" (click)="setReceived()" [class.active]="order.status === 'received'">
-        RECEIVED
-      </button>
-    </td>
+        <button
+          type="button"
+          class="progress"
+          (click)="setInProgress()"
+          [class.active]="order.status === 'in_progress'"
+        >
+          IN PROGRESS
+        </button>
 
-    <td>
-      <div class="order-items">
-        <div class="order-items-grid">
-          @for (itemId of order.order_items; track itemId) {
-          <div class="order-item">
-            {{ itemsMap.get(itemId)?.name }}
+        <button
+          type="button"
+          class="completed"
+          (click)="setFinished()"
+          [class.active]="order.status === 'completed'"
+        >
+          FINISHED
+        </button>
+
+        <button
+          type="button"
+          class="received"
+          (click)="setReceived()"
+          [class.active]="order.status === 'received'"
+        >
+          RECEIVED
+        </button>
+      </td>
+
+      <!-- ITEMS -->
+      <td>
+        <div class="order-items">
+          <div class="order-items-grid">
+            @for (itemId of order.order_items; track itemId) {
+              <div class="order-item">
+                {{ itemsMap.get(itemId)?.name }}
+              </div>
+            }
           </div>
-          }
         </div>
-      </div>
-    </td>
-  </tr>
+      </td>
+    </tr>
+  </tbody>
 </table>
